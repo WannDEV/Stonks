@@ -10,6 +10,7 @@ const getProfile = (profile) => {
   const { id, displayName, emails, provider, _json } = profile;
   const { locale, picture } = _json;
   const deafultRole = "user";
+  const defaultAmount = 0;
 
   if (emails?.length) {
     const email = emails[0].value;
@@ -21,6 +22,7 @@ const getProfile = (profile) => {
       locale,
       picture,
       role: deafultRole,
+      amount: defaultAmount,
     };
   }
   return null;
@@ -44,8 +46,16 @@ passport.use(
           });
 
           if (!existingEmailAccount) {
-            const { googleId, name, email, provider, locale, picture, role } =
-              getProfile(profile);
+            const {
+              googleId,
+              name,
+              email,
+              provider,
+              locale,
+              picture,
+              role,
+              amount,
+            } = getProfile(profile);
             const createdUser = new User({
               name,
               email,
@@ -54,6 +64,7 @@ passport.use(
               locale,
               picture,
               role,
+              amount,
             });
             const newAccount = await createdUser.save();
             return done(null, newAccount);

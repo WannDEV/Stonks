@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Stock = require("./stock");
 
 const Schema = mongoose.Schema;
 
@@ -11,6 +12,8 @@ const userSchema = new Schema({
   locale: { type: String, required: true },
   picture: { type: String, required: true },
   role: { type: String, required: true },
+  amount: { type: Number, required: true },
+  stocks: [{ type: Schema.Types.ObjectId, ref: "Stock" }],
 });
 
 module.exports = mongoose.model("User", userSchema);

@@ -4,6 +4,7 @@ const router = express.Router();
 import validateRequestJWT from "../middlewares/token-validation";
 import auth from "./auth";
 import test from "./test";
+import stock from "./stock";
 
 router.get("/", (req, res) =>
   res.send("Welcome to my Google Oauth express server")
@@ -11,6 +12,7 @@ router.get("/", (req, res) =>
 
 router.use("/oauth", auth);
 router.use("/test", test);
+router.use("/stock", validateRequestJWT, stock);
 
 router.post("/testroute", validateRequestJWT, (req, res) => {
   console.log(res.locals.decodedAccessToken);

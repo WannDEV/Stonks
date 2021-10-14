@@ -53,9 +53,7 @@ const AuthController = {
   },
   async logout(req, res, next) {
     res.clearCookie("refreshToken");
-    console.log(
-      `logout method: ${req.cookies.accessToken}, ${req.cookies.refreshToken}`
-    );
+
     return res.sendStatus(200);
   },
   async getUser(req, res, next) {
