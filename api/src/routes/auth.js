@@ -1,7 +1,7 @@
 import passport from "passport";
 
 import AuthController from "../controllers/AuthController";
-import validateRequestJWT from "../middlewares/token-validation";
+import validateRequestJWT from "../helpers/token-validation";
 
 var express = require("express");
 var router = express.Router();

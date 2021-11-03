@@ -13,14 +13,14 @@ const AuthController = {
       { id: user.id },
       process.env.JWT_SECRET_ACCESS_TOKEN,
       {
-        expiresIn: 10,
+        expiresIn: 1000,
       }
     );
     const refreshToken = jwt.sign(
       { id: user.id },
       process.env.JWT_SECRET_REFRESH_TOKEN,
       {
-        expiresIn: 30,
+        expiresIn: 3000,
       }
     );
     res.cookie("refreshToken", `${refreshToken}`, {
@@ -37,7 +37,7 @@ const AuthController = {
         const accessToken = jwt.sign(
           { id },
           process.env.JWT_SECRET_ACCESS_TOKEN,
-          { expiresIn: 10 }
+          { expiresIn: 1000 }
         );
         return res.status(200).send({ accessToken });
       }

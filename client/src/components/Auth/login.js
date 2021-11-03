@@ -1,8 +1,8 @@
 import Cookie from "js-cookie";
 import { useRouter } from "next/router";
 import { GoogleLogin } from "react-google-login";
-import api from "../services/api";
-import { useAuth } from "../shared/context/auth";
+import api from "../../services/api";
+import { useAuth } from "../../shared/context/auth";
 
 const axiosApiCall = (url, method, body = {}) =>
   api({

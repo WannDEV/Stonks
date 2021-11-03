@@ -1,14 +1,13 @@
-import Cookies from "js-cookie";
 import useSWR from "swr";
 import ContentLoader from "react-content-loader";
 
 import TestButton from "../components/TestButton";
 import { useAuth } from "../shared/context/auth";
 import api from "../services/api";
-import Logout from "../components/logout";
+import Logout from "../components/Auth/logout";
 
 const ProtectedPage = () => {
-  const { loading } = useAuth();
+  const { loading, role } = useAuth();
   const { data, isValidating } = useSWR(
     loading ? false : "/test/testfetch",
     api.get
@@ -23,6 +22,7 @@ const ProtectedPage = () => {
   return (
     <div>
       <h1>This is a protected page</h1>
+      <p>role: {role}</p>
       <TestButton />
       <Logout />
       {!showSkeleton && data.data.message}

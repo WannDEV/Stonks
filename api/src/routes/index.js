@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-import validateRequestJWT from "../middlewares/token-validation";
+import validateRequestJWT from "../helpers/token-validation";
 import auth from "./auth";
 import test from "./test";
 import stock from "./stock";

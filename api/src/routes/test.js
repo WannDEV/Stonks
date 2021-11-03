@@ -1,5 +1,5 @@
 import TestController from "../controllers/TestController";
-import validateRequestJWT from "../middlewares/token-validation";
+import validateRequestJWT from "../helpers/token-validation";
 
 const express = require("express");
 const router = express.Router();

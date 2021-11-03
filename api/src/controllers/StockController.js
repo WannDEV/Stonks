@@ -1,51 +1,78 @@
 import User from "../db/models/user";
-
-const sortStockResponse = (data) => {
-  const stocks = data.stocks;
-  // const newStocks = [];
-  // const temporaryStocks = {
-  //   price_at_purchase: 0,
-  //   amount: 0,
-  //   symbol: null,
-  // };
-
-  // for (let i = 0; i < stocks.length; ++i) {
-  //   console.log(i);
-  //   for (let j = 0; j < stocks.length; ++j) {
-  //     if (i.symbol == j.symbol) {
-  //       temporaryStocks.symbol = i.symbol;
-  //       temporaryStocks.price_at_purchase += j.price_at_purchase;
-  //       temporaryStocks.amount += j.amount;
-
-  //       stocks.slice(j, 1);
-  //     }
-  //     newStocks.push(temporaryStocks);
-  //   }
-  // }
-
-  // console.log(stocks, typeof stocks);
-  // console.log(`newStocks: ${newStocks}`);
-
-  let result = stocks.map((a) => a);
-  console.log(result);
-};
+import { sortStockResponse, getCurrentPrice } from "../helpers/sortStocks";
 
 const StockController = {
   async getAll(req, res, next) {
     const id = res.locals.decodedAccessToken.id;
-
-    User.findOne({ _id: id })
+    try {
+      const limit = parseInt(req.query.limit);
+      const offset = parseInt(req.query.skip);
+  
+      await User.findOne({ _id: id })
       .populate({
         path: "stocks",
         model: "Stock",
-      })
-      .exec((err, stock) => {
-        if (err)
-          return res.status(500).json({ message: "Something went wrong" });
-        sortStockResponse(stock);
-        return res.status(200).json(stock);
+      }).skip(offset).limit(limit).exec((err, stocksCollection) => {
+
+        const sortedStocksCollection = sortStockResponse(stocksCollection);
+        getCurrentPrice(sortedStocksCollection).then(stocks => {
+
+          const stocksCollectionCount = stocks.length;
+  
+          const totalPages = Math.ceil(stocksCollectionCount / limit);
+          const currentPage = 0;
+          if (offset > 0) {
+            currentPage = Math.ceil(stocksCollectionCount % offset);
+          }
+
+          console.log(stocks, stocksCollectionCount, currentPage, totalPages);
+          res.status(200).send({
+            data: stocks,
+            paging: {
+              total: stocksCollectionCount,
+              page: currentPage,
+              pages: totalPages,
+            },
+          });
+        });
+        })
+    } catch (e) {
+      console.log("Error", e);
+      res.status(500).send({
+        data: null,
       });
+    }
+
+
+    // User.findOne({ _id: id })
+    //   .populate({
+    //     path: "stocks",
+    //     model: "Stock",
+    //   })
+    //   .exec((err, stock) => {
+    //     if (err)
+    //       return res.status(500).json({ message: "Something went wrong" });
+    //     const sortedStocks = sortStockResponse(stock);
+    //     getCurrentPrice(sortedStocks).then(response => {
+    //       return res.status(200).json(response)
+    //     });
+    //   });
   },
+  async getCurrentMarketPrice(req, res, next) {
+    const stocks = req.body.stocks;
+
+    if (!stocks) return res.status(400).json({ message: "No symbols were passed" });
+    if (stocks.length > 10) return res.status(400).json({ message: "Too many symbols were passed" });
+
+    // try {
+    //   const modifiedResponse = getCurrentPrice(stocks);
+    //   return res.status(200).json(modifiedResponse);
+    // } catch (err) {
+    //   return res.status(503).json({ message: "Something went wrong with api call to external api" });
+    // }
+    const modifiedResponse = getCurrentPrice(stocks);
+    return res.status(200).json(modifiedResponse);
+  }
 };
 
 export default StockController;

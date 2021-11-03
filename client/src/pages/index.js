@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import Login from "../components/login";
+import Login from "../components/Auth/login";
 import TestButton from "../components/TestButton";
 import { useAuth } from "../shared/context/auth";
 import AllStocksButton from "../components/AllStocksButton";
@@ -18,6 +18,7 @@ const Index = () => {
       <p>{isAuthenticated ? user.name : "Not signed in"}</p>
       <p>Login status: {isAuthenticated ? "Signed in" : "Not signed in"}</p>
       <p>User role: {role}</p>
+      <p>Remember that refresh- and accesstoken lifetime has been changed for dev purposes</p>
     </div>
   );
 };
