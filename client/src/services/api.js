@@ -32,11 +32,16 @@ api.interceptors.response.use(
   },
   async function (error) {
     if (error.response) {
-      const { status, data } = error.response;
+      const { statusCode, payload } = error.response.data.output;
+      console.log(
+        `Error from API: ${statusCode}, ${JSON.stringify(
+          error.response.data.output.payload.message
+        )}`
+      );
 
-      switch (status) {
+      switch (statusCode) {
         case 401:
-          if (data.message === "Access token expired") {
+          if (payload.message === "Access token expired") {
             try {
               await refreshToken();
               const config = error.config;
@@ -51,13 +56,20 @@ api.interceptors.response.use(
               return (window.location.href = "/error-page");
             }
           } else if (
-            data.message === "Refresh token expired" ||
-            data.message === "Access and refresh token expired"
+            payload.message === "Refresh token expired" ||
+            payload.message === "Access and refresh token expired"
           ) {
             logout();
             return (window.location.href = "/logged-out");
           } else {
             return (window.location.href = "/error-page");
+          }
+        case 400:
+          if (payload.message == "User doesn't have enough stocks to sell") {
+            break;
+          } else {
+            // return (window.location.href = "/error-page");
+            break;
           }
         default:
           return Promise.reject(error);

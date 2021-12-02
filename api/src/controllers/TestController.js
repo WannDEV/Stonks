@@ -1,11 +1,13 @@
 import User from "../db/models/user";
 import Stock from "../db/models/stock";
 const mongoose = require("mongoose");
+import winston from "../utils/logger/winston";
+import boom from "@hapi/boom";
 
 const TestController = {
   async testFetch(req, res) {
     const id = res.locals.decodedAccessToken.id;
-    console.log(id, mongoose.isValidObjectId(id));
+    winston.debug(`${id}, ${mongoose.isValidObjectId(id)}`);
 
     const stock = new Stock({
       price_at_purchase: 70,
@@ -15,7 +17,7 @@ const TestController = {
 
     // await User.findByIdAndUpdate(id, { $push: { stocks: stock } }).exec(
     //   (err, user) => {
-    //     console.log(`updateOne - err: ${err}, user: ${user}`);
+    //     winston.debug(`updateOne - err: ${err}, user: ${user}`);
     //   }
     // );
 
@@ -28,7 +30,7 @@ const TestController = {
     //   },
     //   { upsert: true }
     // ).exec((err, response) => {
-    //   console.log(err, response);
+    //   winston.error(`${err}, ${response}`);
     // });
 
     // User.findOne({ _id: id }, (err, user) => {
@@ -36,14 +38,14 @@ const TestController = {
     //     user.stocks.push(stock);
     //     user.save();
     //   } else {
-    //     console.log(err);
+    //     winston.error(err);
     //   }
     // });
 
     // User.findById({ _id: id })
     //   .populate("stocks")
     //   .exec((err, stock) => {
-    //     console.log(stock, err);
+    //     winston.error(`${stock}, ${err}`);
     //   });
 
     // const stock = new Stock();
@@ -61,7 +63,7 @@ const TestController = {
       })
         .clone()
         .catch((err) => {
-          console.log(err);
+          winston.error(err);
         });
     });
 
@@ -74,7 +76,7 @@ const TestController = {
     //   },
     //   { new: true, upsert: true }
     // ).exec((err, response) => {
-    //   console.log(err, response);
+    //   winston.error(`${err}, ${response}`);
     // });
 
     // User.updateOne({ _id: id }, { name: "Bent" }).exec((err, response) => {
@@ -91,6 +93,10 @@ const TestController = {
     //   });
 
     return res.status(200).json({ message: "Success" });
+  },
+  async testError(req, res, next) {
+    if (1 != 2) next(boom.badRequest("Bad query"));
+    else res.status(200).json({ message: "1 apparently equals 2" });
   },
 };
 

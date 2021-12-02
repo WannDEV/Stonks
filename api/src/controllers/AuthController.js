@@ -1,11 +1,13 @@
 import jwt from "jsonwebtoken";
+import boom from "@hapi/boom";
+
 import User from "../db/models/user";
-import HttpError from "../models/http-error";
 
 const AuthController = {
   async googleLogin(req, res, next) {
     if (!req.user) {
-      return res.status(401).send({ error: "User was not authenticated" });
+      // return res.status(401).send({ error: "User was not authenticated" });
+      return next(boom.unauthorized("User was not authenticated"));
     }
     const { email } = req.user;
     const user = await User.findOne({ email });
@@ -43,11 +45,11 @@ const AuthController = {
       }
     } catch (err) {
       if (err instanceof jwt.TokenExpiredError) {
-        new HttpError("Refresh token expired", 401);
-        return res.status(401).json({ message: "Refresh token expired" });
+        // return res.status(401).json({ message: "Refresh token expired" });
+        return next(boom.unauthorized("Refresh token expired"));
       } else {
-        new HttpError("Refresh token not valid", 400);
-        return res.status(400).json({ message: "Refresh token not valid" });
+        // return res.status(400).json({ message: "Refresh token not valid" });
+        return next(boom.unauthorized("Refresh token not valid"));
       }
     }
   },
@@ -65,9 +67,10 @@ const AuthController = {
     if (user) {
       return res.status(200).send(user);
     } else {
-      return res
-        .status(404)
-        .json({ message: "Could not find user in the database" });
+      // return res
+      //   .status(404)
+      //   .json({ message: "Could not find user in the database" });
+      return next(boom.notFound("Could not find user in the database"));
     }
   },
 };

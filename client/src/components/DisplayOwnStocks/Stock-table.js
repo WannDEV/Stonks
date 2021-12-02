@@ -62,9 +62,7 @@ const TableComponent = ({
   return (
     <Fragment>
       {loading ? (
-        <div>
-          {" "}
-        </div>
+        <div> </div>
       ) : (
         <div>
           <div>

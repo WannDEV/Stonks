@@ -43,3 +43,6 @@ yarn-error.log*
 # node
 package-lock.json
 yarn.lock
+
+# VSCodeCounter
+/.VSCodeCounter

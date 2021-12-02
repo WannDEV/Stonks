@@ -56,9 +56,21 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const setBalance = (balance) => {
+    setUser({ ...user, amount: balance });
+  };
+
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, user, loading, role, login, logout }}
+      value={{
+        isAuthenticated,
+        user,
+        loading,
+        role,
+        login,
+        logout,
+        setBalance,
+      }}
     >
       {children}
     </AuthContext.Provider>

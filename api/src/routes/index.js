@@ -15,7 +15,6 @@ router.use("/test", test);
 router.use("/stock", validateRequestJWT, stock);
 
 router.post("/testroute", validateRequestJWT, (req, res) => {
-  console.log(res.locals.decodedAccessToken);
   res.status(200).json({ message: "Access granted to this ressource" });
 });
 

@@ -1,10 +1,8 @@
 import passport from "passport";
-import { config } from "dotenv";
+import config from "config";
 import User from "../db/models/user";
 
 const GoogleTokenStrategy = require("passport-google-token").Strategy;
-
-config();
 
 const getProfile = (profile) => {
   const { id, displayName, emails, provider, _json } = profile;
@@ -31,8 +29,8 @@ const getProfile = (profile) => {
 passport.use(
   new GoogleTokenStrategy(
     {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientID: config.get("auth.google.client_id"),
+      clientSecret: config.get("auth.google.client_secret"),
     },
     async (accessToken, refreshToken, profile, done) => {
       try {

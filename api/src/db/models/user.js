@@ -16,4 +16,9 @@ const userSchema = new Schema({
   stocks: [{ type: Schema.Types.ObjectId, ref: "Stock" }],
 });
 
+// userSchema.pre('deleteMany', function(next) {
+//   var user = this;
+//   user.model('Stock').deleteOne({ person: person._id }, next);
+// });
+
 module.exports = mongoose.model("User", userSchema);

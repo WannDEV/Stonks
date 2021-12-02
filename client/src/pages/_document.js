@@ -8,6 +8,8 @@ export default class Document extends NextDocument {
         <body>
           <Main />
           <NextScript />
+          <div id="modal-root"></div>
+          <div id="backdrop-root"></div>
         </body>
       </Html>
     );
