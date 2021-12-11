@@ -169,28 +169,26 @@ const StockController = {
     let ownedStocks = [];
     let balance = 0;
 
-    await User.findOne({ _id: id })
+    const populatedUser = await User.findOne({ _id: id })
       .populate({
         path: "stocks",
         model: "Stock",
       })
-      .exec((err, response) => {
-        if (err) return next(boom.badImplementation(`Database error: ${err}`));
-        ownedStocks = response.stocks;
-        balance = response.amount;
-
-        // Figure out if user has enough stocks to sell
-        let tempCounter = 0;
-        for (let i = 0; i < ownedStocks.length; ++i) {
-          if (ownedStocks[i].symbol == symbol)
-            tempCounter += ownedStocks[i].amount;
-        }
-
-        if (tempCounter < amount)
-          return next(
-            boom.badRequest("User doesn't have enough stocks to sell")
-          );
+      .catch((err) => {
+        return next(boom.badImplementation(`Database error: ${err}`));
       });
+
+    ownedStocks = await populatedUser.stocks;
+    balance = await populatedUser.amount;
+
+    // Figure out if user has enough stocks to sell
+    let tempCounter = 0;
+    for (let i = 0; i < ownedStocks.length; ++i) {
+      if (ownedStocks[i].symbol == symbol) tempCounter += ownedStocks[i].amount;
+    }
+
+    if (tempCounter < amount)
+      return next(boom.badRequest("User doesn't have enough stocks to sell"));
 
     let referenceIds = [];
 
@@ -212,9 +210,9 @@ const StockController = {
 
     balance += currentStockPrice * amount;
 
-    // winston.debug(`Current market price: ${currentStockPrice}`);
-    // winston.debug(`Owned stocks: ${ownedStocks}`);
-    // winston.debug(`Balance: ${balance}`);
+    winston.debug(`Current market price: ${currentStockPrice}`);
+    winston.debug(`Owned stocks: ${ownedStocks}`);
+    winston.debug(`Balance: ${balance}`);
 
     // Algorithm to figure out indexes of stocks that needs to be sold
     let indexes = [];
@@ -261,26 +259,6 @@ const StockController = {
       if (tempStocks[i].symbol == symbol) tempValue += tempStocks[i].amount;
     }
     winston.debug(tempValue);
-
-    // await User.findOneAndUpdate(
-    //   { _id: id },
-    //   {
-    //     $set: {
-    //       amount: balance,
-    //       stocks: tempStocks,
-    //     },
-    //   }
-    // ).exec((err, response) => {
-    //   if (err)
-    //     return next(
-    //       boom.badImplementation(
-    //         "Something went wrong trying to write to the database"
-    //       )
-    //     );
-    //   winston.debug(`Update array response: ${response}`);
-    //   return res.status(200).json({ message: "Transaction approved" });
-    // });
-    // // return res.status(200).json({ message: "This got returned" });
 
     const session = await mongoose.startSession();
     session.startTransaction();
