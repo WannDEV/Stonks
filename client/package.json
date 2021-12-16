@@ -1,24 +1,41 @@
 {
   "name": "client",
-  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+    "dev": "npm-run-all --parallel watch:sass dev:next",
+    "build": "npm-run-all build:css build:next",
+    "start": "next start",
+    "dev:next": "next dev",
+    "build:next": "next build",
+    "watch:sass": "node-sass src/sass/main.scss src/styles/index.css -w",
+    "compile:sass": "node-sass src/sass/main.scss src/styles/index.comp.css",
+    "prefix:css": "postcss --use autoprefixer -b \"last 10 version\" src/styles/index.comp.css -o src/styles/index.prefix.css",
+    "compress:css": "node-sass src/styles/index.prefix.css src/styles/index.css --output-style compressed",
+    "build:css": "npm-run-all compile:sass prefix:css compress:css"
   },
   "dependencies": {
-    "@emotion/react": "^11.0.0",
-    "@emotion/styled": "^11.0.0",
-    "axios": "^0.21.1",
-    "js-cookie": "^2.2.1",
-    "next": "latest",
-    "react": "^17.0.1",
-    "react-content-loader": "^6.0.3",
-    "react-dom": "^17.0.1",
+    "@emotion/react": "^11.7.0",
+    "@emotion/styled": "^11.6.0",
+    "@mui/icons-material": "^5.2.1",
+    "@mui/material": "^5.2.3",
+    "axios": "^0.24.0",
+    "js-cookie": "^3.0.1",
+    "next": "12.0.7",
+    "node-sass": "^6.0.1",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
     "react-google-login": "^5.2.2",
     "react-table": "^7.7.0",
     "react-transition-group": "^4.4.2",
-    "swr": "^1.0.1"
+    "swr": "^1.1.1"
   },
-  "license": "MIT"
+  "devDependencies": {
+    "autoprefixer": "^10.4.0",
+    "concat": "^1.0.3",
+    "eslint": "8.4.1",
+    "eslint-config-next": "12.0.7",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^8.4.4",
+    "postcss-cli": "^9.1.0"
+  }
 }

@@ -1,11 +1,7 @@
-import React from "react";
-import Login from "../components/Auth/login";
-
-const LoggedOutPage = () => {
+const Custom404 = () => {
   return (
     <div>
-      <h1>Du er nu successfuldt logget ud</h1>
-      <Login />
+      <h1>Denne side kunne desværre ikke blive fundet</h1>
     </div>
   );
 };
@@ -19,4 +15,4 @@ export async function getStaticProps(context) {
   };
 }
 
-export default LoggedOutPage;
+export default Custom404;

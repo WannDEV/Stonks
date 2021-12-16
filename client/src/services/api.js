@@ -14,7 +14,7 @@ async function refreshToken() {
 let urls = {
   test: `http://localhost:2000/`,
   development: "http://localhost:2000/",
-  production: "https://wanntech.dk/",
+  production: "https://wanntech.dk/api/",
 };
 const api = axios.create({
   baseURL: urls[process.env.NODE_ENV],
