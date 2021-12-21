@@ -1,10 +1,9 @@
-import Login from "../components/Auth/login";
+import HeroSection from "../sections/HeroSection";
 
 const LandingPage = () => {
   return (
     <div>
-      <h1>Landing page</h1>
-      <Login />
+      <HeroSection />
     </div>
   );
 };

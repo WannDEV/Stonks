@@ -15,3 +15,23 @@ ORDER: Base + typography > general layout + grid > page layout > components
 
 1em = 16px
 */
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit; }
+
+html {
+  background: #202020; }
+
+p, h1, h2, h3, h4, h5, h6 {
+  color: white; }
+
+body {
+  box-sizing: border-box; }
+
+.container {
+  max-width: 100rem;
+  margin-right: auto;
+  margin-left: auto; }
