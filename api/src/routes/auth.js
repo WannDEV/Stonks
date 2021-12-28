@@ -1,6 +1,6 @@
 import passport from "passport";
 
-import AuthController from "../controllers/AuthController";
+import AuthController from "../controllers/auth/AuthController";
 import validateRequestJWT from "../helpers/token-validation";
 
 var express = require("express");

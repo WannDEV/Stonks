@@ -34,7 +34,7 @@ const ListBoxItem = styled(Box)(({ theme }) => ({
 }));
 
 const SubHeaderTypography = styled(Typography)(({ theme }) => ({
-  color: theme.palette.common.white,
+  color: theme.palette.text.primary,
   textAlign: "center",
 }));
 

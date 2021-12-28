@@ -46,3 +46,6 @@ yarn.lock
 
 # VSCodeCounter
 /.VSCodeCounter
+
+# Localhost ssl certificate
+/client/.cert

@@ -1,2 +1,74 @@
-h1 {
-  color: blue; }
+/*
+0 -600px:   Phone
+600-900px:  Tablet portrait
+900-1200px:  Tablet landscape
+[1200-1800] is where the normal styles apply
+1800px +:   Big desktop
+
+$breakpoint argument choices
+- phone
+- tab-port
+- tab-land
+- big-desktop
+
+ORDER: Base + typography > general layout + grid > page layout > components
+
+1em = 16px
+*/
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit; }
+
+html {
+  background: #202020; }
+
+p, h1, h2, h3, h4, h5, h6 {
+  color: white; }
+
+body {
+  box-sizing: border-box; }
+
+.container {
+  max-width: 100rem;
+  margin-right: auto;
+  margin-left: auto; }
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0; } }
+
+@keyframes fill {
+  to {
+    fill: rgba(36, 123, 160, 0.3); } }
+
+@keyframes fillSecondary {
+  to {
+    fill: rgba(0, 168, 150, 0.3); } }
+
+.overlay-border {
+  fill: none;
+  stroke-width: 5;
+  stroke: #202020; }
+
+.grid-back {
+  fill: #202020; }
+
+.grid-front {
+  fill: #535353; }
+
+.chart-line {
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-dasharray: 2000;
+  stroke-dashoffset: 2000; }
+  .chart-line.primary {
+    stroke: #247BA0;
+    fill: rgba(36, 123, 160, 0);
+    animation: draw 3s linear forwards, fill 0.5s linear 1.5s forwards; }
+  .chart-line.secondary {
+    stroke: #00A896;
+    fill: rgba(0, 168, 150, 0);
+    animation: draw 3s linear forwards, fillSecondary 0.5s linear 1.5s forwards; }

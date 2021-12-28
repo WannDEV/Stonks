@@ -1,14 +1,9 @@
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
-import { ThemeProvider } from "@mui/material/styles";
 
-import landingPageHeaderTheme from "../themes/landing-page-header";
-
-// This button needs to be changed. Add arrow animation on hover
-// https://codepen.io/nicholaspetersen/pen/mEmOjb
+import HeroSectionGraphic from "../components/HeroSectionGraphic/HeroSectionGraphic";
 
 const SpanBox = styled(Box)(({ theme }) => ({
   color: theme.palette.primary.main,
@@ -19,7 +14,7 @@ const ActionButton = styled(Button)(({ theme }) => ({
   fontSize: "1rem",
   width: "15rem",
   height: "3rem",
-  color: theme.palette.common.white,
+  color: theme.palette.primary.contrastText,
 
   "& span": {
     display: "inline-block",
@@ -32,7 +27,7 @@ const ActionButton = styled(Button)(({ theme }) => ({
   },
   "& svg": {
     position: "relative",
-    color: theme.palette.common.white,
+    color: theme.palette.primary.contrastText,
     width: "1.1rem",
     right: "0px",
     opacity: "0",
@@ -54,11 +49,16 @@ const ActionButton = styled(Button)(({ theme }) => ({
     flexGrow: 1,
     justifyContent: "center",
   },
+  [theme.breakpoints.down("sm")]: {
+    width: "12rem",
+  },
 }));
 
 const SubHeaderTypography = styled(Typography)(({ theme }) => ({
-  color: theme.palette.common.white,
+  color: theme.palette.text.primary,
   fontSize: "1.1rem",
+  lineHeight: "1.5rem",
+  letterSpacing: "0.5px",
   margin: `0 0 ${theme.spacing(4)} 0`,
   [theme.breakpoints.down("md")]: {
     textAlign: "center",
@@ -69,7 +69,8 @@ const SubHeaderTypography = styled(Typography)(({ theme }) => ({
 }));
 
 const HeaderTypography = styled(Typography)(({ theme }) => ({
-  color: theme.palette.common.white,
+  fontFamily: "lato, sans-serif",
+  color: theme.palette.text.primary,
   fontWeight: "bold",
   fontSize: "3rem",
   margin: `0 0 ${theme.spacing(2.5)} 0`,
@@ -90,15 +91,12 @@ const HeroSectionBox = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "row",
   padding: `0 ${theme.spacing(2)}`,
-
-  backgroundColor: "red",
 }));
 
 const TextSideBox = styled(Box)(({ theme }) => ({
   flex: "1 1 50%",
   display: "flex",
   alignItems: "center",
-  backgroundColor: "blue",
   [theme.breakpoints.down("md")]: {
     flex: "1",
   },
@@ -107,17 +105,20 @@ const TextSideBox = styled(Box)(({ theme }) => ({
 const TextBox = styled(Box)(({ theme }) => ({
   width: "100%",
   margin: "0 0 0 auto",
+  maxWidth: "32rem",
   [theme.breakpoints.down("md")]: {
     display: "inline-flex",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
+    margin: "0 auto",
   },
 }));
 
 const ImageSideBox = styled(Box)(({ theme }) => ({
   width: "50%",
-  backgroundColor: "yellow",
+  position: "relative",
+  padding: "0 0 0 5rem",
   [theme.breakpoints.down("md")]: {
     display: "none",
   },
@@ -125,57 +126,57 @@ const ImageSideBox = styled(Box)(({ theme }) => ({
 
 const HeroSection = () => {
   return (
-    <Container width="md">
-      <HeroSectionBox>
-        <TextSideBox>
-          <TextBox>
-            <ThemeProvider theme={landingPageHeaderTheme}>
-              <HeaderTypography variant="h2" component="div">
-                Fiktive penge<SpanBox component="span">,</SpanBox>
-                <br />
-                rigtig markedsdata.
-              </HeaderTypography>
-            </ThemeProvider>
-            <SubHeaderTypography variant="p" component="div">
-              Hos Aktiekampen kan du oprette aktiespil, så du kan investere
-              fiktive penge på rigtig markedsdata
-            </SubHeaderTypography>
-            <ActionButton variant="contained" disableRipple>
-              <span>
-                Opret dig nu
-                <svg
-                  x="0px"
-                  y="0px"
-                  viewBox="0 0 36.1 25.8"
-                  enable-background="new 0 0 36.1 25.8"
-                >
-                  <g>
-                    <line
-                      fill="none"
-                      stroke="#FFFFFF"
-                      stroke-width="3"
-                      stroke-miterlimit="10"
-                      x1="0"
-                      y1="12.9"
-                      x2="34"
-                      y2="12.9"
-                    ></line>
-                    <polyline
-                      fill="none"
-                      stroke="#FFFFFF"
-                      stroke-width="3"
-                      stroke-miterlimit="10"
-                      points="22.2,1.1 34,12.9 22.2,24.7   "
-                    ></polyline>
-                  </g>
-                </svg>
-              </span>
-            </ActionButton>
-          </TextBox>
-        </TextSideBox>
-        <ImageSideBox></ImageSideBox>
-      </HeroSectionBox>
-    </Container>
+    // <Container width="md">
+    <HeroSectionBox>
+      <TextSideBox>
+        <TextBox>
+          <HeaderTypography variant="h2" component="div">
+            Fiktive penge<SpanBox component="span">,</SpanBox>
+            <br />
+            rigtig markedsdata.
+          </HeaderTypography>
+          <SubHeaderTypography variant="p" component="div">
+            Hos Aktiekampen kan du oprette aktiespil og investere fiktive penge
+            på rigtig markedsdata.
+          </SubHeaderTypography>
+          <ActionButton variant="contained" disableRipple>
+            <span>
+              Opret dig nu
+              <svg
+                x="0px"
+                y="0px"
+                viewBox="0 0 36.1 25.8"
+                enableBackground="new 0 0 36.1 25.8"
+              >
+                <g>
+                  <line
+                    fill="none"
+                    stroke="#FFFFFF"
+                    strokeWidth="3"
+                    strokeMiterlimit="10"
+                    x1="0"
+                    y1="12.9"
+                    x2="34"
+                    y2="12.9"
+                  ></line>
+                  <polyline
+                    fill="none"
+                    stroke="#FFFFFF"
+                    strokeWidth="3"
+                    strokeMiterlimit="10"
+                    points="22.2,1.1 34,12.9 22.2,24.7   "
+                  ></polyline>
+                </g>
+              </svg>
+            </span>
+          </ActionButton>
+        </TextBox>
+      </TextSideBox>
+      <ImageSideBox>
+        <HeroSectionGraphic />
+      </ImageSideBox>
+    </HeroSectionBox>
+    // </Container>
   );
 };
 

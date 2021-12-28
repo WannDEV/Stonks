@@ -5,14 +5,10 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import InputBase from "@mui/material/InputBase";
 import MenuIcon from "@mui/icons-material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
-import theme from "../themes/navbar-header";
-import { ThemeProvider } from "@mui/material/styles";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import CloseIcon from "@mui/icons-material/Close";
 import Tooltip from "@mui/material/Tooltip";
@@ -22,11 +18,12 @@ import Link from "@mui/material/Link";
 import AcUnitIcon from "@mui/icons-material/AcUnit";
 import { useAuth } from "../shared/context/auth";
 import LoginDialog from "../components/Auth/Login";
+import SearchBar from "../components/SearchBar/SearchBar";
 
 const StyledAcUnitIcon = styled(AcUnitIcon)(({ theme }) => ({
   width: "24",
   height: "24",
-  color: theme.palette.common.white,
+  color: theme.palette.text.primary,
   margin: `0 ${theme.spacing(2)} 0 ${theme.spacing(2)}`,
 }));
 
@@ -44,16 +41,16 @@ const DrawerButtonContentAlignment = styled(Box)(({ theme }) => ({
 }));
 
 const DrawerButton = styled(Button)(({ theme }) => ({
-  color: theme.palette.common.white,
+  color: theme.palette.text.primary,
   width: "100%",
   "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.1),
+    backgroundColor: alpha(theme.palette.text.primary, 0.1),
     transition: "background-color 0.5s linear",
   },
 }));
 
 const HeaderLink = styled(Link)(({ theme }) => ({
-  color: theme.palette.common.white,
+  color: theme.palette.text.primary,
 }));
 
 const StyledDivider = styled(Divider)(({ theme }) => ({
@@ -70,7 +67,7 @@ const LogoBoxDrawer = styled(Box)(({ theme }) => ({
 
 const MenuItemLink = styled(Link)(({ theme }) => ({
   margin: `0 ${theme.spacing(5)} 0 0`,
-  color: theme.palette.common.white,
+  color: theme.palette.text.primary,
   [theme.breakpoints.down("md")]: {
     display: "none",
   },
@@ -82,7 +79,7 @@ const MenuItemLink = styled(Link)(({ theme }) => ({
     height: "2px",
     bottom: "0",
     left: "0",
-    backgroundColor: theme.palette.common.white,
+    backgroundColor: theme.palette.text.primary,
     transformOrigin: "bottom right",
     transition: "transform .25s ease-out",
   },
@@ -97,10 +94,13 @@ const MenuItemBox = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   textAlign: "center",
+  [theme.breakpoints.down("md")]: {
+    display: "none",
+  },
 }));
 
 const StyledCloseIcon = styled(CloseIcon)(({ theme }) => ({
-  color: theme.palette.common.white,
+  color: theme.palette.text.primary,
   width: "2rem",
   height: "2rem",
   margin: theme.spacing(2),
@@ -114,15 +114,25 @@ const DrawerBox = styled(Box)(({ theme }) => ({
 
 const StyledSwipeableDrawer = styled(SwipeableDrawer)(({ theme }) => ({}));
 
+const StyledMenuIcon = styled(MenuIcon)(({ theme }) => ({
+  width: "32px",
+  height: "32px",
+  [theme.breakpoints.down("xs")]: {
+    width: "20px",
+    height: "20px",
+  },
+}));
+
 const MenuIconButton = styled(IconButton)(({ theme }) => ({
   margin: theme.spacing(2),
-  [theme.breakpoints.down("sm")]: {
-    margin: `${theme.spacing(1)} 0 ${theme.spacing(1)} 0`,
-    padding: theme.spacing(1),
-  },
   display: "none",
   [theme.breakpoints.down("md")]: {
     display: "flex",
+    padding: "1",
+  },
+  [theme.breakpoints.down("sm")]: {
+    margin: `${theme.spacing(1)} 0 ${theme.spacing(1)} 0`,
+    padding: theme.spacing(1),
   },
 }));
 
@@ -132,7 +142,7 @@ const LogoBox = styled(Box)(({ theme }) => ({
 }));
 
 const HeaderTypography = styled(Typography)(({ theme }) => ({
-  display: { xs: "none", xs: "block" },
+  fontFamily: "Source Serif Pro, serif",
   [theme.breakpoints.down("md")]: {
     margin: "auto",
     fontWeight: "bold",
@@ -140,12 +150,16 @@ const HeaderTypography = styled(Typography)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     fontSize: "1.2rem",
   },
+  [theme.breakpoints.down("xs")]: {
+    fontSize: "1rem",
+  },
   marginTop: theme.spacing(0.5),
 }));
 
 const HeaderTypographyDrawer = styled(Typography)(({ theme }) => ({
+  fontFamily: "Source Serif Pro, serif",
   margin: "auto 0 auto 5px",
-  color: theme.palette.common.white,
+  color: theme.palette.text.primary,
   fontSize: "1.5rem",
   fontWeight: "bold",
 }));
@@ -158,6 +172,9 @@ const LogInButton = styled(Button)(({ theme }) => ({
     padding: theme.spacing(0.5),
   },
   marginRight: theme.spacing(1),
+  [theme.breakpoints.down("xs")]: {
+    marginLeft: "2px",
+  },
 }));
 
 const LogInText = styled(Typography)(({ theme }) => ({
@@ -165,6 +182,9 @@ const LogInText = styled(Typography)(({ theme }) => ({
   textTransform: "none",
   fontSize: theme.typography.fontSize,
   marginLeft: "3px",
+  [theme.breakpoints.down("xs")]: {
+    marginLeft: "0",
+  },
 }));
 
 const InvisibleBox = styled(Box)(({ theme }) => ({
@@ -188,51 +208,21 @@ const StyledContainer = styled(Container)(({ theme }) => ({
   paddingLeft: theme.spacing(1),
 }));
 
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(1),
-  marginLeft: 0,
-  width: "100%",
-  order: 1,
-  marginBottom: theme.spacing(2),
+const StyledAccountCircle = styled(AccountCircle)(({ theme }) => ({
   [theme.breakpoints.up("md")]: {
-    marginLeft: theme.spacing(3),
-    width: "auto",
-    order: 0,
-    marginBottom: 0,
+    display: "flex",
+  },
+  [theme.breakpoints.down("md")]: {
+    display: "none",
   },
 }));
 
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    height: "70%",
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
-    },
-    [theme.breakpoints.up("lg")]: {
-      width: "30ch",
-    },
+const StyledLogoIcon = styled("img")(({ theme }) => ({
+  width: "24px",
+  height: "24px",
+  [theme.breakpoints.down("xs")]: {
+    width: "20px",
+    height: "20px",
   },
 }));
 
@@ -264,35 +254,24 @@ export default function Header() {
           <StyledContainer width="md">
             <StyledToolbar>
               <MenuIconButton
-                size="large"
                 edge="start"
                 color="inherit"
                 aria-label="open drawer"
                 onClick={openDrawer}
               >
-                <MenuIcon />
+                <StyledMenuIcon />
               </MenuIconButton>
               <HeaderLink href="/" underline="none">
                 <Box sx={{ display: "flex" }}>
                   <LogoBox>
-                    <img src="/logo.svg" width="24" height="24" />
+                    <StyledLogoIcon src="/logo.svg" />
                   </LogoBox>
-                  <ThemeProvider theme={theme}>
-                    <HeaderTypography variant="h6" noWrap component="div">
-                      Aktiekampen
-                    </HeaderTypography>
-                  </ThemeProvider>
+                  <HeaderTypography variant="h6" noWrap component="div">
+                    Aktiekampen
+                  </HeaderTypography>
                 </Box>
               </HeaderLink>
-              <Search>
-                <SearchIconWrapper>
-                  <SearchIcon />
-                </SearchIconWrapper>
-                <StyledInputBase
-                  placeholder="Søg efter aktier..."
-                  inputProps={{ "aria-label": "search" }}
-                />
-              </Search>
+              <SearchBar />
               <InvisibleBox />
               <MenuItemBox>
                 <MenuItemLink href="#" underline="none">
@@ -318,7 +297,7 @@ export default function Header() {
                   color="white"
                   onClick={openLoginDialog}
                 >
-                  <AccountCircle sx={{ display: { xs: "none", md: "flex" } }} />
+                  <StyledAccountCircle />
                   <LogInText>Log ind</LogInText>
                 </LogInButton>
               )}
@@ -340,11 +319,9 @@ export default function Header() {
           </Box>
           <LogoBoxDrawer>
             <img src="/logo.svg" width="32" height="32" />
-            <ThemeProvider theme={theme}>
-              <HeaderTypographyDrawer variant="h6" noWrap component="div">
-                Aktiekampen
-              </HeaderTypographyDrawer>
-            </ThemeProvider>
+            <HeaderTypographyDrawer variant="h6" noWrap component="div">
+              Aktiekampen
+            </HeaderTypographyDrawer>
           </LogoBoxDrawer>
           <StyledDivider />
           <DrawerButton href="/">
