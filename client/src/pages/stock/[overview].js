@@ -38,6 +38,14 @@ const CompanyProfileLogoBox = styled(Box)(({ theme }) => ({
   height: "7rem",
   width: "7rem",
   marginRight: theme.spacing(2),
+  [theme.breakpoints.down("md")]: {
+    height: "5rem",
+    width: "5rem",
+  },
+  [theme.breakpoints.down("sm")]: {
+    height: "3rem",
+    width: "3rem",
+  }
 }));
 
 const CompanyProfileTextBox = styled(Box)(({ theme }) => ({
@@ -52,11 +60,23 @@ const CompanyProfileHeaderTypography = styled(Typography)(({ theme }) => ({
   fontWeight: "600",
   fontSize: "1.8rem",
   color: theme.palette.text.primary,
+  [theme.breakpoints.down("md")]: {
+    fontSize: "1.5rem"
+  },
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "1.3rem"
+  }
 }));
 
 const CompanyProfileSubHeaderTypography = styled(Typography)(({ theme }) => ({
   fontSize: "1rem",
   color: theme.palette.text.secondary,
+  [theme.breakpoints.down("md")]: {
+    fontSize: "0.9rem"
+  },
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "0.7rem"
+  }
 }));
 
 const CompanyProfileSubHeaderLineBox = styled(Box)(({ theme }) => ({
@@ -76,12 +96,16 @@ const ChangeTabBox = styled(Box)(({ theme }) => ({
 
 const StyledTabs = styled(Tabs)(({ theme }) => ({
   display: "flex",
-  maxWidth: "30rem",
+  flexGrow: "1",
   justifyContent: "center",
+  borderBottom: `2px solid ${theme.palette.grey.main}`,
 }));
 
 const StyledTab = styled(Tab)(({ theme }) => ({
-  borderBottom: `2px solid ${theme.palette.grey.main}`,
+  // padding: `0 ${theme.spacing(5)}`,
+  // [theme.breakpoints.down("md")]: {
+  //   padding: `0 ${theme.spacing(10)}`,
+  // }
 }));
 
 const LatestDataBox = styled(Box)(({ theme }) => ({
@@ -108,18 +132,27 @@ const LatestDataRightSideBox = styled(Box)(({ theme }) => ({
 const LatestDataPrimaryTypography = styled(Typography)(({ theme }) => ({
   fontSize: "1rem",
   color: theme.palette.text.primary,
+  [theme.breakpoints.down("md")]: {
+    fontSize: "0.8rem"
+  }
 }));
 
 const LatestDataSecondaryTypography = styled(Typography)(({ theme }) => ({
   fontSize: "1rem",
   color: theme.palette.text.secondary,
   marginRight: theme.spacing(5),
+  [theme.breakpoints.down("md")]: {
+    fontSize: "0.8rem"
+  }
 }));
 
 const LatestDataHeaderTypography = styled(Typography)(({ theme }) => ({
   fontSize: "2rem",
   color: theme.palette.text.primary,
   fontWeight: "bold",
+  [theme.breakpoints.down("md")]: {
+    fontSize: "1.5rem"
+  }
 }));
 
 const LatestDataHorizontalBox = styled(Box)(({ theme }) => ({
@@ -130,7 +163,10 @@ const LatestDataHorizontalBox = styled(Box)(({ theme }) => ({
 
 const LatestDataHorizontalNumbersBox = styled(Box)(({ theme }) => ({
   display: "flex",
-  width: "8rem",
+  maxWidth: "8rem",
+  [theme.breakpoints.down("md")]: {
+    // width: "5rem"
+  }
 }));
 
 const StockOverview = () => {
@@ -357,7 +393,7 @@ const StockOverview = () => {
             <rect y="10" rx="3" ry="3" width="1000" height="20" />
           </ContentLoader>
         )}
-        {latestData.length != 0 && currentTab == 0 && (
+        {latestData.length != 0 && (
           <LatestDataBox variant="div">
             <LatestDataLeftSideBox variant="div">
               <LatestDataSecondaryTypography variant="body1" component={"span"}>
@@ -386,7 +422,7 @@ const StockOverview = () => {
                   variant="body1"
                   component={"span"}
                 >
-                  Højeste kurs:{" "}
+                  Høj:{" "}
                 </LatestDataSecondaryTypography>
                 <LatestDataPrimaryTypography variant="body1" component={"span"}>
                   <LatestDataHorizontalNumbersBox>
@@ -399,7 +435,7 @@ const StockOverview = () => {
                   variant="body1"
                   component={"span"}
                 >
-                  Laveste kurs:{" "}
+                  Lav:{" "}
                 </LatestDataSecondaryTypography>
                 <LatestDataPrimaryTypography variant="body1" component={"span"}>
                   <LatestDataHorizontalNumbersBox>

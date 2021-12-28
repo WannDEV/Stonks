@@ -114,16 +114,18 @@ const drawAreaChart = (chartData, theme, interval) => {
       gridlines: { color: theme.palette.grey.main },
       textStyle: { color: theme.palette.grey.light },
       format: "dd/MM/yy",
+      showTextEvery: 100
     },
     vAxis: {
       gridlines: { color: theme.palette.grey.main },
       textStyle: { color: theme.palette.grey.light },
     },
     legend: "none", // remove sidebar
-    chartArea: { width: "90%", height: "80%" }, // remove padding from the chart
+    chartArea: { width: "90%", height: "60%" }, // remove padding from the chart
     tooltip: {
       isHtml: true,
     },
+    focusTarget: 'category'
   };
 
   const chart = new google.visualization.AreaChart(

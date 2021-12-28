@@ -6,7 +6,7 @@ const IntervalBox = styled(Box)(({ theme }) => ({
   display: "flex",
   width: "100%",
   justifyContent: "center",
-  marginBottom: theme.spacing(4),
+  zIndex: "2",
   flexWrap: "wrap",
 }));
 
@@ -16,6 +16,11 @@ const IntervalButton = styled(Button)(({ theme }) => ({
   margin: `0 ${theme.spacing(2)}`,
   padding: `${theme.spacing(0.75)} ${theme.spacing(0.5)}`,
   fontWeight: "600",
+  [theme.breakpoints.down("md")]: {
+    margin: `${theme.spacing(0.5)} ${theme.spacing(0.5)}`,
+    padding: `${theme.spacing(0.5)} 0`,
+    fontSize: "0.8rem"
+  },
 
   "&:hover": {
     backgroundColor: theme.palette.primary.light,

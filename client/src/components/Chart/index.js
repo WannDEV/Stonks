@@ -9,7 +9,14 @@ import drawCandleStickChart from "./CandlestickChart";
 const ChartBox = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.background.main,
   width: "100%",
-  height: "50rem",
+  height: "35rem",
+  margin: `${theme.spacing(-4)} 0 ${theme.spacing(8)} 0`,
+  [theme.breakpoints.down("md")]: {
+    height: "30rem"
+  },
+  [theme.breakpoints.down("sm")]: {
+    height: "25rem"
+  }
 }));
 
 const Chart = (props) => {

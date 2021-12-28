@@ -19,6 +19,14 @@ const ChangeChartIconButton = styled(IconButton)(({ theme }) => ({
   color: theme.palette.grey.main,
   padding: theme.spacing(0.2),
   marginLeft: theme.spacing(2),
+  [theme.breakpoints.down("md")]: {
+    width: "2.5rem",
+    height: "2.5rem",
+  },
+  [theme.breakpoints.down("sm")]: {
+    width: "2.2rem",
+    height: "2.2rem",
+  },
 }));
 
 const ChangeChartButtons = (props) => {
