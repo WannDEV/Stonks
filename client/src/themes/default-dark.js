@@ -41,6 +41,10 @@ const theme = createTheme({
     red: {
       main: "#D22B2B",
     },
+    action: {
+      disabledBackground: "#dc3c4d",
+      disabled: "#fff",
+    },
   },
   typography: {
     fontFamily: ["Open Sans", "sans-serif"].join(","),

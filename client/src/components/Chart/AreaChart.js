@@ -1,5 +1,52 @@
 import { GoogleCharts } from "google-charts";
 
+const dateToCustomDateString = (date, interval) => {
+  let dateString = "Undefined";
+
+  const weekDays = [
+    "mandag",
+    "tirsdag",
+    "onsdag",
+    "torsdag",
+    "fredag",
+    "lørdag",
+    "søndag",
+  ];
+  const dayOfWeek = weekDays[date.getDay() - 1];
+  const dd = date.getDate();
+  const months = [
+    "januar",
+    "februar",
+    "marts",
+    "april",
+    "maj",
+    "juni",
+    "juli",
+    "august",
+    "september",
+    "oktober",
+    "november",
+    "december",
+  ];
+  const MM = months[date.getMonth()];
+  const yy = date.getFullYear();
+  const hh = date.getHours();
+  const mm = date.getMinutes();
+
+  if (hh < 10) hh = `0${hh}`;
+  if (mm < 10) mm = `0${mm}`;
+
+  if (interval == "1d" || interval == "7d") {
+    dateString = `${dayOfWeek.slice(0, 3)} d. ${dd}. ${MM.slice(
+      0,
+      3
+    )} ${hh}:${mm}`;
+  } else {
+    dateString = `${dd}. ${MM} ${yy}`;
+  }
+  return dateString;
+};
+
 const createCustomHTMLContentTooltipAreaChart = (
   date,
   price,
@@ -17,7 +64,7 @@ const createCustomHTMLContentTooltipAreaChart = (
     "lørdag",
     "søndag",
   ];
-  const dayOfWeek = weekDays[date.getDay()];
+  const dayOfWeek = weekDays[date.getDay() - 1];
   const dd = date.getDate();
   const months = [
     "januar",
@@ -81,9 +128,14 @@ const drawAreaChart = (chartData, theme, interval) => {
     ["x", "number", { type: "string", role: "tooltip", p: { html: true } }],
   ];
 
+  let axisCounter = 0;
+
   for (let i = chartData.length - 1; i >= 0; --i) {
     dataArr.push([
-      new Date(chartData[i].date).toLocaleDateString("da-DK"),
+      {
+        v: axisCounter,
+        f: dateToCustomDateString(new Date(chartData[i].date)),
+      },
       chartData[i].close,
       createCustomHTMLContentTooltipAreaChart(
         new Date(chartData[i].date),
@@ -92,16 +144,14 @@ const drawAreaChart = (chartData, theme, interval) => {
         interval
       ),
     ]);
+    ++axisCounter;
   }
 
   const data = GoogleCharts.api.visualization.arrayToDataTable(dataArr);
 
-  // data.addColumn("x");
-  // data.addColumn("number", "close");
+  const midIndexOfArr = Math.round((chartData.length - 1) / 2);
 
   const options = {
-    // width: 500,
-    // height: 1500,
     // Colors the entire chart area, simple version
     backgroundColor: "transparent",
     // Colors the entire chart area, with opacity
@@ -113,19 +163,36 @@ const drawAreaChart = (chartData, theme, interval) => {
     hAxis: {
       gridlines: { color: theme.palette.grey.main },
       textStyle: { color: theme.palette.grey.light },
-      format: "dd/MM/yy",
-      showTextEvery: 100
+      ticks: [
+        {
+          v: 0,
+          f: dateToCustomDateString(
+            new Date(chartData[chartData.length - 1].date),
+            interval
+          ),
+        },
+        {
+          v: midIndexOfArr,
+          f: dateToCustomDateString(
+            new Date(chartData[midIndexOfArr].date),
+            interval
+          ),
+        },
+        {
+          v: chartData.length - 1,
+          f: dateToCustomDateString(new Date(chartData[0].date), interval),
+        },
+      ],
     },
     vAxis: {
       gridlines: { color: theme.palette.grey.main },
       textStyle: { color: theme.palette.grey.light },
     },
     legend: "none", // remove sidebar
-    chartArea: { width: "90%", height: "60%" }, // remove padding from the chart
+    chartArea: { width: "75%", height: "75%" }, // remove padding from the chart
     tooltip: {
       isHtml: true,
     },
-    focusTarget: 'category'
   };
 
   const chart = new google.visualization.AreaChart(

@@ -83,6 +83,7 @@ const SearchBar = () => {
         onKeyUp={(event) => {
           if (event.key == "Enter") onSearch();
         }}
+        autoComplete="off"
       />
     </Search>
   );

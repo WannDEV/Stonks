@@ -1,5 +1,52 @@
 import { GoogleCharts } from "google-charts";
 
+const dateToCustomDateString = (date, interval) => {
+  let dateString = "Undefined";
+
+  const weekDays = [
+    "mandag",
+    "tirsdag",
+    "onsdag",
+    "torsdag",
+    "fredag",
+    "lørdag",
+    "søndag",
+  ];
+  const dayOfWeek = weekDays[date.getDay() - 1];
+  const dd = date.getDate();
+  const months = [
+    "januar",
+    "februar",
+    "marts",
+    "april",
+    "maj",
+    "juni",
+    "juli",
+    "august",
+    "september",
+    "oktober",
+    "november",
+    "december",
+  ];
+  const MM = months[date.getMonth()];
+  const yy = date.getFullYear();
+  const hh = date.getHours();
+  const mm = date.getMinutes();
+
+  if (hh < 10) hh = `0${hh}`;
+  if (mm < 10) mm = `0${mm}`;
+
+  if (interval == "1d" || interval == "7d") {
+    dateString = `${dayOfWeek.slice(0, 3)} d. ${dd}. ${MM.slice(
+      0,
+      3
+    )} ${hh}:${mm}`;
+  } else {
+    dateString = `${dd}. ${MM} ${yy}`;
+  }
+  return dateString;
+};
+
 const createCustomHTMLContentTooltipCandleStick = (
   date,
   low,
@@ -20,7 +67,7 @@ const createCustomHTMLContentTooltipCandleStick = (
     "lørdag",
     "søndag",
   ];
-  const dayOfWeek = weekDays[date.getDay()];
+  const dayOfWeek = weekDays[date.getDay() - 1];
   const dd = date.getDate();
   const months = [
     "januar",
@@ -104,11 +151,12 @@ const createCustomHTMLContentTooltipCandleStick = (
 
 const drawCandleStickChart = (chartData, theme, interval) => {
   let counter = 0;
+  let dateCounter = 0;
   let lineColor;
 
   let dataArr = [
     [
-      "date",
+      "x",
       "low",
       "open",
       "close",
@@ -125,7 +173,13 @@ const drawCandleStickChart = (chartData, theme, interval) => {
         ? theme.palette.green.main
         : theme.palette.red.main;
     dataArr.push([
-      new Date(chartData[chartDataLength].date).toLocaleDateString("da-DK"),
+      {
+        v: dateCounter,
+        f: dateToCustomDateString(
+          new Date(chartData[chartDataLength].date),
+          interval
+        ),
+      },
       chartData[chartDataLength].low,
       chartData[chartDataLength].open,
       chartData[chartDataLength].close,
@@ -141,6 +195,7 @@ const drawCandleStickChart = (chartData, theme, interval) => {
         interval
       ),
     ]);
+    ++dateCounter;
 
     for (let i = chartData.length - 1; i >= 0; --i) {
       if (counter >= 5) {
@@ -149,7 +204,10 @@ const drawCandleStickChart = (chartData, theme, interval) => {
             ? theme.palette.green.main
             : theme.palette.red.main;
         dataArr.push([
-          new Date(chartData[i].date).toLocaleDateString("da-DK"),
+          {
+            v: dateCounter,
+            f: dateToCustomDateString(new Date(chartData[i].date), interval),
+          },
           chartData[i].low,
           chartData[i].open,
           chartData[i].close,
@@ -168,6 +226,7 @@ const drawCandleStickChart = (chartData, theme, interval) => {
         counter = 0;
       }
       ++counter;
+      ++dateCounter;
     }
 
     if (chartData.length % 5 != 0) {
@@ -176,7 +235,10 @@ const drawCandleStickChart = (chartData, theme, interval) => {
           ? theme.palette.green.main
           : theme.palette.red.main;
       dataArr.push([
-        new Date(chartData[0].date).toLocaleDateString("da-DK"),
+        {
+          v: dateCounter,
+          f: dateToCustomDateString(new Date(chartData[0].date), interval),
+        },
         chartData[0].low,
         chartData[0].open,
         chartData[0].close,
@@ -192,6 +254,7 @@ const drawCandleStickChart = (chartData, theme, interval) => {
           interval
         ),
       ]);
+      dateCounter;
     }
   } else {
     for (let i = chartData.length - 1; i >= 0; --i) {
@@ -200,7 +263,10 @@ const drawCandleStickChart = (chartData, theme, interval) => {
           ? theme.palette.green.main
           : theme.palette.red.main;
       dataArr.push([
-        new Date(chartData[i].date).toLocaleDateString("da-DK"),
+        {
+          v: dateCounter,
+          f: dateToCustomDateString(new Date(chartData[i].date), interval),
+        },
         chartData[i].low,
         chartData[i].open,
         chartData[i].close,
@@ -216,14 +282,15 @@ const drawCandleStickChart = (chartData, theme, interval) => {
           interval
         ),
       ]);
+      ++dateCounter;
     }
   }
 
   const data = GoogleCharts.api.visualization.arrayToDataTable(dataArr);
 
+  const midIndexOfArr = Math.round((chartData.length - 1) / 2);
+
   const options = {
-    // width: 500,
-    // height: 1500,
     // Colors the entire chart area, simple version
     backgroundColor: "transparent",
     // Colors the entire chart area, with opacity
@@ -241,7 +308,26 @@ const drawCandleStickChart = (chartData, theme, interval) => {
     hAxis: {
       gridlines: { color: theme.palette.grey.main },
       textStyle: { color: theme.palette.grey.light },
-      format: "dd/MM/yy",
+      ticks: [
+        {
+          v: 0,
+          f: dateToCustomDateString(
+            new Date(chartData[chartData.length - 1].date),
+            interval
+          ),
+        },
+        {
+          v: midIndexOfArr,
+          f: dateToCustomDateString(
+            new Date(chartData[midIndexOfArr].date),
+            interval
+          ),
+        },
+        {
+          v: chartData.length - 1,
+          f: dateToCustomDateString(new Date(chartData[0].date), interval),
+        },
+      ],
     },
     vAxis: {
       gridlines: { color: theme.palette.grey.main },

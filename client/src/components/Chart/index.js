@@ -1,22 +1,21 @@
 import { GoogleCharts } from "google-charts";
 import Box from "@mui/material/Box";
 import { styled, useTheme } from "@mui/material/styles";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import drawAreaChart from "./AreaChart";
 import drawCandleStickChart from "./CandlestickChart";
 
 const ChartBox = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.background.main,
-  width: "100%",
-  height: "35rem",
-  margin: `${theme.spacing(-4)} 0 ${theme.spacing(8)} 0`,
+  width: "auto",
+  height: "45rem",
   [theme.breakpoints.down("md")]: {
-    height: "30rem"
+    height: "35rem",
   },
   [theme.breakpoints.down("sm")]: {
-    height: "25rem"
-  }
+    height: "30rem",
+  },
 }));
 
 const Chart = (props) => {
@@ -41,7 +40,10 @@ const Chart = (props) => {
   window.onresize = windowHasBeenResized;
 
   function windowHasBeenResized() {
-    if (chartData.length > 0) GoogleCharts.load(drawChart, { language: "da" });
+    if (document.getElementById("chart")) {
+      if (chartData.length > 0)
+        GoogleCharts.load(drawChart, { language: "da" });
+    }
   }
 
   return <ChartBox variant="div" id="chart" />;

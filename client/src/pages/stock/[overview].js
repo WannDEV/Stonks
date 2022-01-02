@@ -14,6 +14,16 @@ import api from "../../services/api";
 import Chart from "../../components/Chart/index";
 import IntervalButtons from "../../components/Chart/IntervalButtons";
 import ChangeChartButtons from "../../components/Chart/ChangeChartButtons";
+import TradeDialog from "../../components/TradeDialog/TradeDialog";
+import PurchaseHistory from "../../sections/PurchaseHistory";
+
+const TradeButton = styled(Button)(({ theme }) => ({
+  textTransform: "capitalize",
+  margin: `${theme.spacing(0.5)} 0 ${theme.spacing(10)} 0`,
+  padding: `${theme.spacing(1.6)} ${theme.spacing(15)}`,
+  fontSize: "1rem",
+  background: `linear-gradient(100deg, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
+}));
 
 const HeaderBox = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -45,7 +55,7 @@ const CompanyProfileLogoBox = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     height: "3rem",
     width: "3rem",
-  }
+  },
 }));
 
 const CompanyProfileTextBox = styled(Box)(({ theme }) => ({
@@ -61,22 +71,22 @@ const CompanyProfileHeaderTypography = styled(Typography)(({ theme }) => ({
   fontSize: "1.8rem",
   color: theme.palette.text.primary,
   [theme.breakpoints.down("md")]: {
-    fontSize: "1.5rem"
+    fontSize: "1.5rem",
   },
   [theme.breakpoints.down("sm")]: {
-    fontSize: "1.3rem"
-  }
+    fontSize: "1.3rem",
+  },
 }));
 
 const CompanyProfileSubHeaderTypography = styled(Typography)(({ theme }) => ({
   fontSize: "1rem",
   color: theme.palette.text.secondary,
   [theme.breakpoints.down("md")]: {
-    fontSize: "0.9rem"
+    fontSize: "0.9rem",
   },
   [theme.breakpoints.down("sm")]: {
-    fontSize: "0.7rem"
-  }
+    fontSize: "0.7rem",
+  },
 }));
 
 const CompanyProfileSubHeaderLineBox = styled(Box)(({ theme }) => ({
@@ -133,8 +143,8 @@ const LatestDataPrimaryTypography = styled(Typography)(({ theme }) => ({
   fontSize: "1rem",
   color: theme.palette.text.primary,
   [theme.breakpoints.down("md")]: {
-    fontSize: "0.8rem"
-  }
+    fontSize: "0.8rem",
+  },
 }));
 
 const LatestDataSecondaryTypography = styled(Typography)(({ theme }) => ({
@@ -142,8 +152,8 @@ const LatestDataSecondaryTypography = styled(Typography)(({ theme }) => ({
   color: theme.palette.text.secondary,
   marginRight: theme.spacing(5),
   [theme.breakpoints.down("md")]: {
-    fontSize: "0.8rem"
-  }
+    fontSize: "0.8rem",
+  },
 }));
 
 const LatestDataHeaderTypography = styled(Typography)(({ theme }) => ({
@@ -151,8 +161,8 @@ const LatestDataHeaderTypography = styled(Typography)(({ theme }) => ({
   color: theme.palette.text.primary,
   fontWeight: "bold",
   [theme.breakpoints.down("md")]: {
-    fontSize: "1.5rem"
-  }
+    fontSize: "1.5rem",
+  },
 }));
 
 const LatestDataHorizontalBox = styled(Box)(({ theme }) => ({
@@ -166,8 +176,16 @@ const LatestDataHorizontalNumbersBox = styled(Box)(({ theme }) => ({
   maxWidth: "8rem",
   [theme.breakpoints.down("md")]: {
     // width: "5rem"
-  }
+  },
 }));
+
+const TradeButtonBox = styled(Box)(({ theme }) => ({
+  display: "flex",
+  width: "100%",
+  justifyContent: "center",
+}));
+
+const StyledChart = styled(Chart)(({ theme }) => ({}));
 
 const StockOverview = () => {
   const router = useRouter();
@@ -180,6 +198,10 @@ const StockOverview = () => {
   const [chartType, setChartType] = useState("areaChart");
   const [interval, setInterval] = useState("1d");
   const [currentTab, setCurrentTab] = useState(0); // used to decide if chart layout or purchase history should be shown
+
+  const [isTradeDialogOpen, setIsTradeDialogOpen] = useState(false);
+
+  const handleTradeDialogClose = () => setIsTradeDialogOpen(false);
 
   useEffect(() => {
     const getCompanyInformation = async function () {
@@ -466,17 +488,32 @@ const StockOverview = () => {
             interval={interval}
             onIntervalChange={onIntervalChange}
           />
-          <Chart
+          <StyledChart
             chartData={chartData}
             chartType={chartType}
             interval={interval}
           />
+          <TradeButtonBox>
+            <TradeButton
+              variant="contained"
+              onClick={() => setIsTradeDialogOpen(true)}
+            >
+              Køb eller sælg
+            </TradeButton>
+            <TradeDialog
+              open={isTradeDialogOpen}
+              handleClose={handleTradeDialogClose}
+              companyProfile={companyProfile}
+            />
+          </TradeButtonBox>
         </div>
       )}
       {currentTab == 1 && ( // tab = purchase history tab
-        <div>
-          <p>Købshistorik</p>
-        </div>
+        <Container maxWidth="md">
+          {companyProfile.length != 0 && (
+            <PurchaseHistory symbol={companyProfile.symbol} />
+          )}
+        </Container>
       )}
     </div>
   );
