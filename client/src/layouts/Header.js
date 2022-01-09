@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { styled, alpha } from "@mui/material/styles";
+import { styled, alpha, useTheme } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -19,6 +19,11 @@ import AcUnitIcon from "@mui/icons-material/AcUnit";
 import { useAuth } from "../shared/context/auth";
 import LoginDialog from "../components/Auth/Login";
 import SearchBar from "../components/SearchBar/SearchBar";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Router from "next/router";
+import SettingsIcon from "@mui/icons-material/Settings";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const StyledAcUnitIcon = styled(AcUnitIcon)(({ theme }) => ({
   width: "24",
@@ -230,8 +235,16 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.main,
 }));
 
+const StyledMenu = styled(Menu)(({ theme }) => ({
+  marginTop: "45px",
+  "& .MuiPaper-root": {
+    backgroundColor: theme.palette.grey.main,
+  },
+}));
+
 export default function Header() {
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated, user, logout } = useAuth();
+  const theme = useTheme();
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -242,6 +255,41 @@ export default function Header() {
 
   const openLoginDialog = () => setIsLoginDialogOpen(true);
   const closeLoginDialog = () => setIsLoginDialogOpen(false);
+
+  const [anchorElUser, setAnchorElUser] = useState(null);
+
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
+  const settingsFunc = () => Router.push("/settings");
+  const logOutFunc = () => {
+    Router.push("/logged-out");
+    logout();
+  };
+
+  const settingsIconStyling = {
+    color: theme.palette.white.main,
+    width: "24px",
+    height: "24px",
+    marginRight: theme.spacing(0.8),
+  };
+
+  const settings = [
+    {
+      name: "Indstillinger",
+      func: settingsFunc,
+      icon: <SettingsIcon sx={settingsIconStyling} />,
+    },
+    {
+      name: "Log ud",
+      func: logOutFunc,
+      icon: <LogoutIcon sx={settingsIconStyling} />,
+    },
+  ];
 
   useEffect(() => {
     if (isAuthenticated) closeLoginDialog();
@@ -280,17 +328,55 @@ export default function Header() {
                 <MenuItemLink href="#" underline="none">
                   Om os
                 </MenuItemLink>
-                {isAuthenticated && (
-                  <Tooltip title="Account settings">
-                    <IconButton onClick={() => {}} size="small" sx={{ ml: 2 }}>
+              </MenuItemBox>
+              {isAuthenticated && (
+                <div>
+                  <Tooltip title="Profil">
+                    <IconButton
+                      onClick={handleOpenUserMenu}
+                      size="small"
+                      sx={{ ml: 2 }}
+                    >
                       <Avatar
                         sx={{ width: 32, height: 32 }}
                         src={user.picture}
                       />
                     </IconButton>
                   </Tooltip>
-                )}
-              </MenuItemBox>
+                  <StyledMenu
+                    id="menu-appbar"
+                    anchorEl={anchorElUser}
+                    anchorOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    open={Boolean(anchorElUser)}
+                    onClose={handleCloseUserMenu}
+                  >
+                    {settings.map((setting) => (
+                      <MenuItem key={setting.name} onClick={setting.func}>
+                        <Box
+                          variant="div"
+                          sx={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          {setting.icon}
+                          <Typography textAlign="center">
+                            {setting.name}
+                          </Typography>
+                        </Box>
+                      </MenuItem>
+                    ))}
+                  </StyledMenu>
+                </div>
+              )}
               {!isAuthenticated && (
                 <LogInButton
                   variant="outlined"

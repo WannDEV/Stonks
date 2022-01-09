@@ -1,5 +1,4 @@
 import Cookie from "js-cookie";
-import { useRouter } from "next/router";
 import { GoogleLogin } from "react-google-login";
 import api from "../../../services/api";
 import { useAuth } from "../../../shared/context/auth";
@@ -11,9 +10,10 @@ const axiosApiCall = (url, method, body = {}) =>
     data: body,
   });
 
-const GoogleLoginButton = () => {
-  const router = useRouter();
+const GoogleLoginButton = (props) => {
   const { login } = useAuth();
+
+  const onSuccessFunc = props.onSuccessFunc;
 
   const onSuccess = (response) => {
     const access_token = response.accessToken;
@@ -21,7 +21,7 @@ const GoogleLoginButton = () => {
       const { accessToken, refreshToken, user } = res.data;
       login(user);
       Cookie.set("accessToken", accessToken);
-      router.push("/");
+      onSuccessFunc();
     });
   };
 

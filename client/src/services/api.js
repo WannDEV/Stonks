@@ -13,7 +13,7 @@ async function refreshToken() {
 
 let urls = {
   test: `http://localhost:2000/`,
-  development: "http://192.168.1.238:2000/",
+  development: "http://localhost:2000/",
   // production: "https://wanntech.dk/api/",
   production: "http://192.168.1.238:2000/",
 };
@@ -39,7 +39,6 @@ api.interceptors.response.use(
           error.response.data.output.payload.message
         )}`
       );
-
       switch (statusCode) {
         case 401:
           if (payload.message === "Access token expired") {
@@ -70,7 +69,7 @@ api.interceptors.response.use(
             break;
           } else {
             // return (window.location.href = "/error-page");
-            break;
+            return payload;
           }
         default:
           return Promise.reject(error);

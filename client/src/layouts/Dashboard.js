@@ -1,10 +1,13 @@
-import Logout from "../components/Auth/logout";
+import { useAuth } from "../shared/context/auth";
+import NoGamesDashboard from "./NoGamesDashboard";
 
 const Dashboard = () => {
+  const { selectedGame } = useAuth();
+
   return (
     <div>
-      <h1>Dashboard</h1>
-      <Logout />
+      {selectedGame == "" && <NoGamesDashboard />}
+      {selectedGame != "" && selectedGame}
     </div>
   );
 };

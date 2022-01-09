@@ -2,6 +2,7 @@ import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import Router from "next/router";
 
 import HeroSectionGraphic from "../components/HeroSectionGraphic/HeroSectionGraphic";
 
@@ -139,9 +140,13 @@ const HeroSection = () => {
             Hos Aktiekampen kan du oprette aktiespil og investere fiktive penge
             på rigtig markedsdata.
           </SubHeaderTypography>
-          <ActionButton variant="contained" disableRipple>
+          <ActionButton
+            variant="contained"
+            disableRipple
+            onClick={() => Router.push("/games/create_new_game")}
+          >
             <span>
-              Opret dig nu
+              Start dit aktiespil
               <svg
                 x="0px"
                 y="0px"

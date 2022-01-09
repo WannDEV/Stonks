@@ -25,7 +25,7 @@ const ListBoxItem = styled(Box)(({ theme }) => ({
   flexGrow: 1,
   justifyContent: "center",
   margin: `${theme.spacing(2)} 0`,
-  ":first-child": {
+  ":first-of-type": {
     marginTop: theme.spacing(4),
   },
   ":last-child": {
@@ -56,6 +56,8 @@ const LoginDialog = (props) => {
 
   const handleClose = props.handleClose;
   let open = isAuthenticated ? false : props.open;
+  const title = props.title || "Log ind";
+  const onSuccessFunc = props.onSuccessFunc || (() => {});
 
   const theme = useTheme();
   const fullscreen = useMediaQuery(theme.breakpoints.down("md"));
@@ -71,7 +73,7 @@ const LoginDialog = (props) => {
         <StyledDialogTitle id="login-dialog-title">
           <Box display="flex" alignItems="center">
             <Box width="40px" />
-            <Box flexGrow={1}>Log ind</Box>
+            <Box flexGrow={1}>{title}</Box>
             <Box>
               <IconButton
                 onClick={handleClose}
@@ -89,7 +91,7 @@ const LoginDialog = (props) => {
           </SubHeaderTypography>
           <ListBox>
             <ListBoxItem>
-              <GoogleLoginButton />
+              <GoogleLoginButton onSuccessFunc={onSuccessFunc} />
             </ListBoxItem>
           </ListBox>
         </StyledDialogContent>

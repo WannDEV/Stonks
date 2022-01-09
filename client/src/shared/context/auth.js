@@ -1,6 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
 import Cookies from "js-cookie";
-import Router from "next/router";
 
 import api from "../../services/api";
 
@@ -11,6 +10,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [role, setRole] = useState("unassigned");
+  const [selectedGame, setSelectedGame] = useState("");
 
   useEffect(() => {
     async function loadUserFromCookies() {
@@ -34,30 +34,52 @@ export const AuthProvider = ({ children }) => {
     loadUserFromCookies();
   }, []);
 
+  useEffect(() => {
+    const getFirstGame = async () => {
+      const accessToken = Cookies.get("accessToken");
+
+      if (accessToken && selectedGame == "") {
+        await api.get("game/get_first_game").then((response) => {
+          if (response.statusCode == 200 || response.status == 200) {
+            if (response.data) {
+              console.log(selectedGame, response.data.currentGame);
+              setSelectedGame(response.data.currentGame);
+            }
+          }
+        });
+      }
+    };
+    getFirstGame();
+  }, [Cookies.get("accessToken")]);
+
   const login = async (user) => {
     if (user["role"] != "unassigned") setRole(user["role"]);
     setUser(user);
     setIsAuthenticated(true);
   };
 
-  const logout = () => {
+  const logout = async () => {
     try {
       Cookies.remove("accessToken");
       setUser(null);
       setIsAuthenticated(false);
       setRole("unassigned");
-      api({
+      setSelectedGame("");
+      await api({
         method: "POST",
         url: "oauth/google/logout",
       });
-      Router.push("/logged-out");
     } catch (err) {
       console.log(err);
     }
   };
 
   const setBalance = (balance) => {
-    setUser({ ...user, amount: balance });
+    // setUser({ ...user, amount: balance });
+  };
+
+  const changeSelectedGame = (gameId) => {
+    setSelectedGame(gameId);
   };
 
   return (
@@ -70,6 +92,8 @@ export const AuthProvider = ({ children }) => {
         login,
         logout,
         setBalance,
+        selectedGame,
+        changeSelectedGame,
       }}
     >
       {children}
