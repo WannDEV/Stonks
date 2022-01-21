@@ -2,25 +2,25 @@ import passport from "passport";
 import config from "config";
 import User from "../db/models/user";
 
+import winston from "../utils/logger/winston";
+
 const GoogleTokenStrategy = require("passport-google-token").Strategy;
 
 const getProfile = (profile) => {
   const { id, displayName, emails, provider, _json } = profile;
   const { locale, picture } = _json;
   const deafultRole = "user";
-  const defaultAmount = 0;
 
   if (emails?.length) {
     const email = emails[0].value;
     return {
-      googleId: id,
       name: displayName,
       email,
       provider,
+      providerId: id,
       locale,
       picture,
       role: deafultRole,
-      amount: defaultAmount,
     };
   }
   return null;
@@ -35,7 +35,7 @@ passport.use(
     async (accessToken, refreshToken, profile, done) => {
       try {
         const existingGoogleAccount = await User.findOne({
-          googleId: profile.id,
+          providerId: profile.id,
         });
 
         if (!existingGoogleAccount) {
@@ -44,25 +44,17 @@ passport.use(
           });
 
           if (!existingEmailAccount) {
-            const {
-              googleId,
-              name,
-              email,
-              provider,
-              locale,
-              picture,
-              role,
-              amount,
-            } = getProfile(profile);
+            const { name, email, provider, providerId, locale, picture, role } =
+              getProfile(profile);
+            winston.debug(`Google id: ${providerId}`);
             const createdUser = new User({
               name,
               email,
-              googleId,
               provider,
+              providerId,
               locale,
               picture,
               role,
-              amount,
             });
             const newAccount = await createdUser.save();
             return done(null, newAccount);

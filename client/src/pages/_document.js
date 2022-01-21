@@ -1,4 +1,5 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
+import theme from "../themes/default-dark";
 
 //
 class MyDocument extends Document {
@@ -35,6 +36,7 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Lato&display=swap"
             rel="stylesheet"
           />
+          <meta name="theme-color" content={theme.palette.primary.main} />
         </Head>
         <body>
           <Main />

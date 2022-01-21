@@ -19,8 +19,8 @@ const GoogleLoginButton = (props) => {
     const access_token = response.accessToken;
     axiosApiCall("oauth/google", "post", { access_token }).then((res) => {
       const { accessToken, refreshToken, user } = res.data;
-      login(user);
       Cookie.set("accessToken", accessToken);
+      login(user);
       onSuccessFunc();
     });
   };

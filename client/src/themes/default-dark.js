@@ -36,10 +36,10 @@ const theme = createTheme({
       main: "#000",
     },
     green: {
-      main: "#2e7d32",
+      main: "#00A36C",
     },
     red: {
-      main: "#D22B2B",
+      main: "#E35335",
     },
     action: {
       disabledBackground: "#dc3c4d",

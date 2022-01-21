@@ -11,6 +11,7 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [role, setRole] = useState("unassigned");
   const [selectedGame, setSelectedGame] = useState("");
+  const [loadingSelectedGame, setLoadingSelectedGame] = useState(true);
 
   useEffect(() => {
     async function loadUserFromCookies() {
@@ -34,23 +35,26 @@ export const AuthProvider = ({ children }) => {
     loadUserFromCookies();
   }, []);
 
-  useEffect(() => {
-    const getFirstGame = async () => {
-      const accessToken = Cookies.get("accessToken");
-
-      if (accessToken && selectedGame == "") {
-        await api.get("game/get_first_game").then((response) => {
+  const updateSelectedGameToFirstGame = async () => {
+    setLoadingSelectedGame(true);
+    if (selectedGame == "" && isAuthenticated) {
+      await api
+        .get("game/get_first_game")
+        .then((response) => {
           if (response.statusCode == 200 || response.status == 200) {
             if (response.data) {
-              console.log(selectedGame, response.data.currentGame);
               setSelectedGame(response.data.currentGame);
             }
           }
-        });
-      }
-    };
-    getFirstGame();
-  }, [Cookies.get("accessToken")]);
+          setLoadingSelectedGame(false);
+        })
+        .catch((err) => setLoadingSelectedGame(false));
+    }
+  };
+
+  useEffect(() => {
+    updateSelectedGameToFirstGame();
+  }, [isAuthenticated, selectedGame]);
 
   const login = async (user) => {
     if (user["role"] != "unassigned") setRole(user["role"]);
@@ -94,6 +98,8 @@ export const AuthProvider = ({ children }) => {
         setBalance,
         selectedGame,
         changeSelectedGame,
+        updateSelectedGameToFirstGame,
+        loadingSelectedGame,
       }}
     >
       {children}

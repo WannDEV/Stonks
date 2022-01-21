@@ -232,7 +232,10 @@ const StyledLogoIcon = styled("img")(({ theme }) => ({
 }));
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
-  backgroundColor: theme.palette.background.main,
+  backgroundColor: `${theme.palette.background.main} !important`,
+  "& .MuiPaper-root": {
+    backgroundColor: `${theme.palette.background.main} !important`,
+  },
 }));
 
 const StyledMenu = styled(Menu)(({ theme }) => ({
@@ -242,9 +245,11 @@ const StyledMenu = styled(Menu)(({ theme }) => ({
   },
 }));
 
-export default function Header() {
-  const { isAuthenticated, user, logout } = useAuth();
+const Header = (props) => {
+  const { isAuthenticated, user, logout, loading } = useAuth();
   const theme = useTheme();
+
+  const { classes } = props;
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -267,8 +272,8 @@ export default function Header() {
 
   const settingsFunc = () => Router.push("/settings");
   const logOutFunc = () => {
-    Router.push("/logged-out");
     logout();
+    Router.push("/logged-out");
   };
 
   const settingsIconStyling = {
@@ -297,7 +302,7 @@ export default function Header() {
 
   return (
     <React.Fragment>
-      <Box sx={{ width: "100%" }}>
+      <Box sx={{ width: "100%" }} component="div">
         <StyledAppBar position="static">
           <StyledContainer width="md">
             <StyledToolbar>
@@ -322,11 +327,11 @@ export default function Header() {
               <SearchBar />
               <InvisibleBox />
               <MenuItemBox>
-                <MenuItemLink href="#" underline="none">
+                <MenuItemLink href="/" underline="none">
                   Overblik
                 </MenuItemLink>
-                <MenuItemLink href="#" underline="none">
-                  Om os
+                <MenuItemLink href="/games" underline="none">
+                  Spil
                 </MenuItemLink>
               </MenuItemBox>
               {isAuthenticated && (
@@ -343,38 +348,6 @@ export default function Header() {
                       />
                     </IconButton>
                   </Tooltip>
-                  <StyledMenu
-                    id="menu-appbar"
-                    anchorEl={anchorElUser}
-                    anchorOrigin={{
-                      vertical: "top",
-                      horizontal: "right",
-                    }}
-                    keepMounted
-                    transformOrigin={{
-                      vertical: "top",
-                      horizontal: "right",
-                    }}
-                    open={Boolean(anchorElUser)}
-                    onClose={handleCloseUserMenu}
-                  >
-                    {settings.map((setting) => (
-                      <MenuItem key={setting.name} onClick={setting.func}>
-                        <Box
-                          variant="div"
-                          sx={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                          }}
-                        >
-                          {setting.icon}
-                          <Typography textAlign="center">
-                            {setting.name}
-                          </Typography>
-                        </Box>
-                      </MenuItem>
-                    ))}
-                  </StyledMenu>
                 </div>
               )}
               {!isAuthenticated && (
@@ -413,18 +386,58 @@ export default function Header() {
           <DrawerButton href="/">
             <DrawerButtonContentAlignment>
               <StyledAcUnitIcon />
-              <DrawerButtonTypography>Test</DrawerButtonTypography>
+              <DrawerButtonTypography>Overblik</DrawerButtonTypography>
             </DrawerButtonContentAlignment>
           </DrawerButton>
-          <DrawerButton href="#">
+          <DrawerButton href="/games/">
             <DrawerButtonContentAlignment>
               <StyledAcUnitIcon />
-              <DrawerButtonTypography>Another test</DrawerButtonTypography>
+              <DrawerButtonTypography>Spil</DrawerButtonTypography>
             </DrawerButtonContentAlignment>
           </DrawerButton>
         </DrawerBox>
       </StyledSwipeableDrawer>
       <LoginDialog open={isLoginDialogOpen} handleClose={closeLoginDialog} />
+      {isAuthenticated && !loading && anchorElUser && (
+        <StyledMenu
+          id="menu-appbar"
+          anchorEl={anchorElUser}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          open={Boolean(anchorElUser)}
+          onClose={handleCloseUserMenu}
+        >
+          {settings.map((setting) => (
+            <MenuItem
+              key={setting.name}
+              onClick={() => {
+                setAnchorElUser(null);
+                setting.func();
+              }}
+            >
+              <Box
+                component="div"
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                {setting.icon}
+                <Typography textAlign="center">{setting.name}</Typography>
+              </Box>
+            </MenuItem>
+          ))}
+        </StyledMenu>
+      )}
     </React.Fragment>
   );
-}
+};
+
+export default Header;

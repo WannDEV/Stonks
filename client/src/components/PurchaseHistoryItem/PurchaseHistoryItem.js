@@ -91,15 +91,15 @@ const PurchaseHistoryItem = (props) => {
     let dateString = "Undefined";
 
     const weekDays = [
+      "søndag",
       "mandag",
       "tirsdag",
       "onsdag",
       "torsdag",
       "fredag",
       "lørdag",
-      "søndag",
     ];
-    const dayOfWeek = weekDays[date.getDay() - 1];
+    const dayOfWeek = weekDays[date.getDay()];
     const dd = date.getDate();
     const months = [
       "januar",

@@ -346,6 +346,63 @@ const StockOverview = () => {
     return name;
   };
 
+  const DUMMY_DATA = [
+    {
+      price: 123,
+      amount: 3,
+      dateOfPurchase: new Date(),
+      kind: "buy",
+      id: "09qqj0fjeefs",
+      status: "pending",
+      stockGame: "test1",
+    },
+    {
+      price: 123,
+      amount: 3,
+      dateOfPurchase: new Date(),
+      kind: "sell",
+      id: "drgsrgsweg",
+      status: "pending",
+      stockGame: "test1",
+    },
+    {
+      price: 123,
+      amount: 3,
+      dateOfPurchase: new Date(),
+      kind: "buy",
+      id: "yjgkuykggjy",
+      status: "success",
+      stockGame: "test2",
+    },
+    {
+      price: 123,
+      amount: 3,
+      dateOfPurchase: new Date(),
+      kind: "buy",
+      id: "hukhukhukhu",
+      status: "success",
+      stockGame: "test3",
+    },
+    {
+      price: 123,
+      amount: 3,
+      dateOfPurchase: new Date(),
+      kind: "sell",
+      id: "rytryrtyrtyryyr",
+      status: "failure",
+      stockGame: "test2",
+    },
+    {
+      price: 123,
+      amount: 3,
+      dateOfPurchase: new Date(),
+      kind: "buy",
+      id: "tfhhfthssht",
+      status: "success",
+      stockGame: "test4",
+    },
+  ];
+
   return (
     <div>
       <Container maxWidth="lg">
@@ -511,7 +568,11 @@ const StockOverview = () => {
       {currentTab == 1 && ( // tab = purchase history tab
         <Container maxWidth="md">
           {companyProfile.length != 0 && (
-            <PurchaseHistory symbol={companyProfile.symbol} />
+            <PurchaseHistory
+              symbol={companyProfile.symbol}
+              data={DUMMY_DATA}
+              defaultShowAmount={10}
+            />
           )}
         </Container>
       )}

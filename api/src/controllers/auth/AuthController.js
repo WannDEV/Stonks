@@ -67,9 +67,6 @@ const AuthController = {
     if (user) {
       return res.status(200).send(user);
     } else {
-      // return res
-      //   .status(404)
-      //   .json({ message: "Could not find user in the database" });
       return next(boom.notFound("Could not find user in the database"));
     }
   },

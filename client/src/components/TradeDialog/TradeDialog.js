@@ -193,7 +193,7 @@ const TradeDialog = (props) => {
   const { isAuthenticated } = useAuth();
 
   const handleClose = props.handleClose;
-  let open = isAuthenticated ? false : props.open;
+  let open = isAuthenticated ? props.open : false;
   const companyProfile = props.companyProfile;
 
   const theme = useTheme();

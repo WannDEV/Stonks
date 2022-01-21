@@ -4,6 +4,7 @@ const router = express.Router();
 // import validateRequestJWT from "../helpers/token-validation";
 import auth from "./auth";
 import stock from "./stock";
+import game from "./game";
 
 router.get("/", (req, res) =>
   res.send("Welcome to my Google Oauth express server")
@@ -11,9 +12,6 @@ router.get("/", (req, res) =>
 
 router.use("/oauth", auth);
 router.use("/stock", stock);
-
-// router.post("/testroute", validateRequestJWT, (req, res) => {
-//   res.status(200).json({ message: "Access granted to this ressource" });
-// });
+router.use("/game", game);
 
 export default router;

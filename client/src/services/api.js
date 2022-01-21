@@ -15,7 +15,7 @@ let urls = {
   test: `http://localhost:2000/`,
   development: "http://localhost:2000/",
   // production: "https://wanntech.dk/api/",
-  production: "http://192.168.1.238:2000/",
+  production: "http://localhost:2000/",
 };
 const api = axios.create({
   baseURL: urls[process.env.NODE_ENV],

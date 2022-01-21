@@ -20,5 +20,6 @@ router.post("/sell_stock", validateRequestJWT, StockController.sellStock);
 router.get("/get_company_information", StockController.getCompanyInformation);
 router.get("/get_chart_data", StockController.getChartData);
 router.get("/get_latest_data", StockController.getLatestData);
+router.get("/autocomplete", StockController.autocomplete);
 
 module.exports = router;

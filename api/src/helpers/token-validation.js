@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-
 import boom from "@hapi/boom";
 
 const validateRequestJWT = (req, res, next) => {
