@@ -20,5 +20,10 @@ router.get(
 );
 router.get("/get_user_games", validateRequestJWT, GameController.getUserGames);
 router.post("/leave_game", validateRequestJWT, GameController.leaveGame);
+router.get(
+  "/get_leaderboard",
+  validateRequestJWT,
+  GameController.getLeaderboard
+);
 
 module.exports = router;

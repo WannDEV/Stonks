@@ -247,7 +247,7 @@ const GameInformationSection = (props) => {
           <ConfigurationItemTypography variant="body1">
             Startbeløb:{" "}
             <ConfigurationItemSpan component="span">
-              {startBalance} kr.
+              ${startBalance}
             </ConfigurationItemSpan>
           </ConfigurationItemTypography>
           <ConfigurationItemTypography variant="body1">

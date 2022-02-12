@@ -10,6 +10,10 @@ import api from "../services/api";
 import GameCard from "../components/GameCard/GameCard";
 import EmptyFolder from "../../assets/empty-folder.svg";
 
+const StyledBox = styled(Box)(({ theme }) => ({
+  backgroundColor: theme.palette.background.main,
+}));
+
 const GameCardsBox = styled("ul")(({ theme }) => ({
   width: "100%",
   display: "grid",
@@ -119,50 +123,54 @@ const GamesPage = () => {
   }, []);
 
   return (
-    <Container maxWidth="lg">
-      <HeaderBox component="div">
-        <HeaderTypography variant="h1">Spiloversigt</HeaderTypography>
-        <NewGameButton
-          variant="contained"
-          onClick={() => Router.push("/games/create_new_game")}
-        >
-          Opret spil
-        </NewGameButton>
-      </HeaderBox>
-      <MyGamesHeaderTypography variant="h2">Mine spil</MyGamesHeaderTypography>
-      <MyGamesSubHeaderTypography variant="body1">
-        Tryk på det spil du gerne vil skifte til.
-      </MyGamesSubHeaderTypography>
-      <GameCardsBox>
-        {games.map((game) => {
-          return (
-            <GameCardItem key={game.urlId}>
-              <GameCard
-                key={game.urlId}
-                name={game.name}
-                gameId={game._id}
-                duration={game.duration}
-                startDate={game.startDate}
-                placement={1}
-                amountOfPlayers={game.users.length}
-                amountOfStocks={game.stocks.length}
-              />
-            </GameCardItem>
-          );
-        })}
-        {games.length == 0 && (
-          <NoGamesBox component="div">
-            <NoGamesGraphic />
-            <NoGamesHeaderTypography variant="h3">
-              Du deltager pt. ikke i nogle spil
-            </NoGamesHeaderTypography>
-            <NoGamesSubHeaderTypography variant="body1">
-              Tryk på "Opret spil" og begynd at spille
-            </NoGamesSubHeaderTypography>
-          </NoGamesBox>
-        )}
-      </GameCardsBox>
-    </Container>
+    <StyledBox component="div">
+      <Container maxWidth="lg">
+        <HeaderBox component="div">
+          <HeaderTypography variant="h1">Spiloversigt</HeaderTypography>
+          <NewGameButton
+            variant="contained"
+            onClick={() => Router.push("/games/create_new_game")}
+          >
+            Opret spil
+          </NewGameButton>
+        </HeaderBox>
+        <MyGamesHeaderTypography variant="h2">
+          Mine spil
+        </MyGamesHeaderTypography>
+        <MyGamesSubHeaderTypography variant="body1">
+          Tryk på det spil du gerne vil skifte til.
+        </MyGamesSubHeaderTypography>
+        <GameCardsBox>
+          {games.map((game) => {
+            return (
+              <GameCardItem key={game.urlId}>
+                <GameCard
+                  key={game.urlId}
+                  name={game.name}
+                  gameId={game._id}
+                  duration={game.duration}
+                  startDate={game.startDate}
+                  placement={1}
+                  amountOfPlayers={game.users.length}
+                  amountOfStocks={game.stocks.length}
+                />
+              </GameCardItem>
+            );
+          })}
+          {games.length == 0 && (
+            <NoGamesBox component="div">
+              <NoGamesGraphic />
+              <NoGamesHeaderTypography variant="h3">
+                Du deltager pt. ikke i nogle spil
+              </NoGamesHeaderTypography>
+              <NoGamesSubHeaderTypography variant="body1">
+                Tryk på "Opret spil" og begynd at spille
+              </NoGamesSubHeaderTypography>
+            </NoGamesBox>
+          )}
+        </GameCardsBox>
+      </Container>
+    </StyledBox>
   );
 };
 

@@ -22,11 +22,13 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "helmet": "^4.6.0",
+    "js-levenshtein": "^1.1.6",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.10",
     "morgan": "^1.10.0",
     "passport": "^0.4.1",
     "passport-google-token": "^0.1.2",
+    "string-similarity": "^4.0.4",
     "winston": "^3.3.3"
   },
   "devDependencies": {

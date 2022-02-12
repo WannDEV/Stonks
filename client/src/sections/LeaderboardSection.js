@@ -176,11 +176,11 @@ const LeaderboardSection = (props) => {
 
   for (let i = 0; i < leaderboard.length; ++i) {
     if (typeof leaderboard[i].change == "number")
-      leaderboard[i].change = `${leaderboard[i].change}% (${
+      leaderboard[i].change = `${leaderboard[i].change}% ($${
         (startBalance * leaderboard[i].change) / 100
-      } kr.)`;
+      })`;
     if (typeof leaderboard[i].total == "number")
-      leaderboard[i].total = `${leaderboard[i].total} kr.`;
+      leaderboard[i].total = `$${leaderboard[i].total}`;
     leaderboard[i].placement = i + 1;
     if (leaderboard[i].name.length >= 24) {
       leaderboard[i].shortName = leaderboard[i].name.substring(0, 20) + "...";

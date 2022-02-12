@@ -6,6 +6,7 @@ import isAlreadyInGame from "./isAlreadyInGame";
 import getPopulatedGame from "./getPopulatedGame";
 import getUserGames from "./getUserGames";
 import leaveGame from "./leaveGame";
+import getLeaderboard from "./getLeaderboard";
 
 const GameController = {
   createGame,
@@ -16,6 +17,7 @@ const GameController = {
   getPopulatedGame,
   getUserGames,
   leaveGame,
+  getLeaderboard,
 };
 
 export default GameController;

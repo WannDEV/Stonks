@@ -83,6 +83,7 @@ const OptionTypography = styled(Typography)(({ theme }) => ({
   whiteSpace: "nowrap",
   overflow: "hidden",
   marginLeft: theme.spacing(0.7),
+  width: "100%",
 }));
 
 const OptionFlagBox = styled(Box)(({ theme }) => ({
@@ -104,7 +105,6 @@ const StyledAutocomplete = styled(Autocomplete)(({ theme }) => ({
   },
   "& .MuiAutocomplete-inputRoot": {
     color: theme.palette.text.primary,
-    // This matches the specificity of the default styles at https://github.com/mui-org/material-ui/blob/v4.11.3/packages/material-ui-lab/src/Autocomplete/Autocomplete.js#L90
     "& .MuiOutlinedInput-notchedOutline": {
       borderColor: "green",
     },
@@ -181,7 +181,9 @@ const SearchBar = () => {
 
   const getOptionsDelayed = useCallback(
     debounce((text, callback) => {
-      if (text != "") {
+      console.log(text, typeof text);
+      if (text != "" || text != " " || !text) {
+        // prevent api call when user is opening search bar and if user acciddently makes a space
         setLoadingOptions(true);
         setOptions([]);
         api
@@ -203,6 +205,10 @@ const SearchBar = () => {
     });
   }, [inputValue, getOptionsDelayed]);
 
+  useEffect(() => {
+    console.log(options);
+  }, [options]);
+
   return (
     <Search component="div">
       <SearchIconWrapper component="div">
@@ -211,7 +217,7 @@ const SearchBar = () => {
       <StyledAutocomplete
         id="autocomplete-search-bar"
         options={options}
-        getOptionLabel={(option) => option.name || ""}
+        getOptionLabel={(option) => option.name + option.symbol || ""}
         disableClearable
         forcePopupIcon={false}
         autoHighlight={true}

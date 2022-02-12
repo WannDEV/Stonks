@@ -202,8 +202,8 @@ const ChooseUsSection = () => {
                       </ReasonsTitleTypography>
                       <ReasonsParagraphTypography variant="body1">
                         Du kan vælge at investere i ting lige fra aktier til
-                        kryptovaluta og råvarer. Du skal blot søge på den
-                        ønskede ting og så vil den poppe frem.
+                        kryptovaluta og råvarer. Du skal blot søge på det
+                        ønskede værdipapir for at finde det.
                       </ReasonsParagraphTypography>
                     </ReasonsTextBox>
                   </TextContainerBox>

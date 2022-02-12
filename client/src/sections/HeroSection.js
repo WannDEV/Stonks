@@ -92,6 +92,7 @@ const HeroSectionBox = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "row",
   padding: `0 ${theme.spacing(2)}`,
+  backgroundColor: theme.palette.background.main,
 }));
 
 const TextSideBox = styled(Box)(({ theme }) => ({

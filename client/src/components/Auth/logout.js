@@ -6,7 +6,7 @@ const Logout = () => {
   const { logout } = useAuth();
 
   const logoutFunc = () => {
-    Router.push("/logged-out");
+    // Router.push("/logged-out");
     logout();
   };
 

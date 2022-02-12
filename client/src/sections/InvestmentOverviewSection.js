@@ -10,9 +10,30 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
 import Router from "next/router";
+import Divider from "@mui/material/Divider";
 
 import PurchaseHistory from "../sections/PurchaseHistory";
 import EmptyFolder from "../../assets/empty-folder.svg";
+import TradeDialog from "../components/TradeDialog/TradeDialog";
+import api from "../services/api";
+
+const HeaderTypography = styled(Typography)(({ theme }) => ({
+  fontSize: "1.6rem",
+  fontWeight: "bold",
+  color: theme.palette.text.primary,
+  [theme.breakpoints.down("md")]: {
+    fontSize: "1.4rem",
+    textAlign: "center",
+  },
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "1.2rem",
+  },
+}));
+
+const HeaderDivider = styled(Divider)(({ theme }) => ({
+  backgroundColor: theme.palette.grey.main,
+  margin: `${theme.spacing(2)} 0`,
+}));
 
 const ContentBox = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -28,20 +49,20 @@ const ContentBox = styled(Box)(({ theme }) => ({
 }));
 
 const BankAccountSubHeaderTypography = styled(Typography)(({ theme }) => ({
-  fontSize: "1.4rem",
+  fontSize: "1.1rem",
   color: theme.palette.text.secondary,
   marginRight: theme.spacing(1),
   [theme.breakpoints.down("sm")]: {
-    fontSize: "1.2rem",
+    fontSize: "1rem",
   },
 }));
 
 const BankAccountHeaderTypography = styled(Typography)(({ theme }) => ({
-  fontSize: "1.4rem",
+  fontSize: "1.1rem",
   color: theme.palette.text.primary,
   fontWeight: "bold",
   [theme.breakpoints.down("sm")]: {
-    fontSize: "1.2rem",
+    fontSize: "1rem",
   },
 }));
 
@@ -113,32 +134,6 @@ const StyledTd = styled("td")(({ theme }) => ({
   padding: `${theme.spacing(0.8)} 0`,
 }));
 
-const TotalBox = styled(Box)(({ theme }) => ({
-  display: "flex",
-  width: "100%",
-  justifyContent: "center",
-}));
-
-const TotalSubHeaderTypography = styled(Typography)(({ theme }) => ({
-  color: theme.palette.text.secondary,
-  fontSize: "1.2rem",
-  display: "inline",
-  marginRight: theme.spacing(0.5),
-  [theme.breakpoints.down("sm")]: {
-    fontSize: "1rem",
-  },
-}));
-
-const TotalHeaderTypography = styled(Typography)(({ theme }) => ({
-  color: theme.palette.text.primary,
-  fontSize: "1.2rem",
-  fontWeight: "bold",
-  display: "inline",
-  [theme.breakpoints.down("sm")]: {
-    fontSize: "1rem",
-  },
-}));
-
 const StyledIconButton = styled(IconButton)(({ theme }) => ({
   boxShadow: `0 1px 3px rgba(255, 255, 255, 0.16), 0 1px 3px rgba(255, 255, 255, 0.23)`,
   borderRadius: "0",
@@ -198,6 +193,15 @@ const EmptyBox = styled(Box)(({ theme }) => ({
   justifyContent: "center",
   alignItems: "center",
   flexDirection: "column",
+}));
+
+const BankAccountDisplayBalanceTypography = styled(Typography)(({ theme }) => ({
+  fontSize: "1.1rem",
+  color: theme.palette.text.secondary,
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "1rem",
+    textAlign: "center",
+  },
 }));
 
 const InvestmentOverviewSection = (props) => {
@@ -315,8 +319,15 @@ const InvestmentOverviewSection = (props) => {
   ];
 
   const userBalance = props.userBalance;
+  const userDisplayBalance = props.userDisplayBalance;
+  const ownedStocks = props.ownedStocks;
+  const startBalance = props.startBalance;
 
   const [currentTab, setCurrentTab] = useState(0);
+
+  const handleTabChange = (event, newValue) => {
+    setCurrentTab(newValue);
+  };
 
   const showNarrowTable = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -345,15 +356,34 @@ const InvestmentOverviewSection = (props) => {
     else return "";
   };
 
-  const handleTabChange = (event, newValue) => {
-    setCurrentTab(newValue);
+  const [isTradeDialogOpen, setIsTradeDialogOpen] = useState(false);
+
+  const handleTradeDialogClose = () => setIsTradeDialogOpen(false);
+
+  const [companyProfile, setCompanyProfile] = useState([]);
+
+  const handleTradeButtonClick = (symbol) => {
+    console.log(symbol);
+    const getCompanyInformation = async function () {
+      await api
+        .get(`stock/get_company_information?symbol=${symbol}`)
+        .then((response) => {
+          setCompanyProfile(response.data[0]);
+          setIsTradeDialogOpen(true);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
+    getCompanyInformation();
   };
 
   const tradeButtonLayout = (symbol) => {
     return (
       <StyledIconButton
         aria-label="trade stocks"
-        onClick={() => console.log(`Trading: ${symbol}`)}
+        onClick={() => handleTradeButtonClick(symbol)}
         color="inherit"
       >
         <StyledShoppingCartIcon />
@@ -361,35 +391,63 @@ const InvestmentOverviewSection = (props) => {
     );
   };
 
-  const data = useMemo(
-    () => [
-      {
-        name: "Tesla Inc.",
-        amount: 5,
-        sharePrice: `${100} kr.`,
-        totalWorth: `${500} kr.`,
-        change: `${-0.02}%`,
-        trade: tradeButtonLayout("tsla"),
-      },
-      {
-        name: "Apple",
-        amount: 3,
-        sharePrice: `${700} kr.`,
-        totalWorth: `${2100} kr.`,
-        change: `${1.2}%`,
-        trade: tradeButtonLayout("aapl"),
-      },
-      {
-        name: "Amazon",
-        amount: 20,
-        sharePrice: `${2000} kr.`,
-        totalWorth: `${400000} kr.`,
-        change: `${0}%`,
-        trade: tradeButtonLayout("amzn"),
-      },
-    ],
-    []
-  );
+  let finalOwnedStocks = [];
+  let totalWorthWithBalance = userDisplayBalance;
+
+  console.log(ownedStocks);
+
+  for (let i = 0; i < ownedStocks.length; ++i) {
+    finalOwnedStocks.push({
+      name: ownedStocks[i].name,
+      amount: Math.round((ownedStocks[i].amount + Number.EPSILON) * 100) / 100,
+      sharePrice: `$${ownedStocks[i].newSharePrice}`,
+      totalWorth: `$${
+        Math.round(
+          (ownedStocks[i].newSharePrice * ownedStocks[i].amount +
+            Number.EPSILON) *
+            100
+        ) / 100
+      }`,
+      change: `${
+        Math.round((ownedStocks[i].change + Number.EPSILON) * 100) / 100
+      }%`,
+      trade: tradeButtonLayout(ownedStocks[i].symbol),
+    });
+    totalWorthWithBalance +=
+      ownedStocks[i].newSharePrice * ownedStocks[i].amount;
+  }
+  const totalChange = (totalWorthWithBalance / startBalance) * 100 - 100;
+
+  if (ownedStocks.length > 0) {
+    // spacing between data and total
+    for (let i = 0; i < 2; ++i) {
+      finalOwnedStocks.push({
+        name: "",
+        amount: "",
+        sharePrice: "",
+        totalWorth: "",
+        change: "",
+        trade: "",
+      });
+    }
+
+    finalOwnedStocks.push({
+      name: `Total: $${
+        Math.round((totalWorthWithBalance + Number.EPSILON) * 100) / 100
+      }`,
+      amount: "",
+      sharePrice: "",
+      totalWorth: `$${
+        Math.round(
+          (totalWorthWithBalance - userDisplayBalance + Number.EPSILON) * 100
+        ) / 100
+      }`,
+      change: `${Math.round((totalChange + Number.EPSILON) * 100) / 100}%`,
+      trade: "",
+    });
+  }
+
+  const data = useMemo(() => finalOwnedStocks, []);
 
   const columns = useMemo(
     () => [
@@ -438,14 +496,25 @@ const InvestmentOverviewSection = (props) => {
 
   return (
     <ContentBox component="div">
+      <HeaderTypography variant="h3">Investeringsoverblik</HeaderTypography>
+      <HeaderDivider />
       <BankAccountBox variant="div">
         <BankAccountSubHeaderTypography variant="body1">
           Bankkonto:
         </BankAccountSubHeaderTypography>
         <BankAccountHeaderTypography variant="body1">
-          {userBalance} kr.
+          ${Math.round((userDisplayBalance + Number.EPSILON) * 100) / 100}
         </BankAccountHeaderTypography>
       </BankAccountBox>
+      <BankAccountDisplayBalanceTypography variant="body1">
+        Tilgængeligt:{" "}
+        <Box
+          component="span"
+          sx={{ color: theme.palette.text.primary, fontWeight: "bold" }}
+        >
+          ${Math.round((userBalance + Number.EPSILON) * 100) / 100}
+        </Box>
+      </BankAccountDisplayBalanceTypography>
       <ChangeTabBox variant="div">
         <StyledTabs
           value={currentTab}
@@ -521,14 +590,6 @@ const InvestmentOverviewSection = (props) => {
                   })}
                 </StyledTbody>
               </StyledTable>
-              <TotalBox component="div">
-                <TotalSubHeaderTypography variant="body1">
-                  Total:
-                </TotalSubHeaderTypography>
-                <TotalHeaderTypography variant="body1">
-                  123231 kr.
-                </TotalHeaderTypography>
-              </TotalBox>
             </div>
           )}
           {data.length == 0 && (
@@ -553,6 +614,14 @@ const InvestmentOverviewSection = (props) => {
               Udforsk markederne
             </ExploreButton>
           </Box>
+          {companyProfile.length != 0 && (
+            <TradeDialog
+              open={isTradeDialogOpen}
+              handleClose={handleTradeDialogClose}
+              companyProfile={companyProfile}
+              currentTab="sell"
+            />
+          )}
         </div>
       )}
       {currentTab == 1 && (

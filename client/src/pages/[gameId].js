@@ -210,7 +210,7 @@ const JoinGame = () => {
 
         gameInformationList.push({
           header: "Startbeløb",
-          val: `${gameInformation.startBalance} kr.`,
+          val: `$${gameInformation.startBalance}`,
           logo: <PaidIcon />,
         });
 

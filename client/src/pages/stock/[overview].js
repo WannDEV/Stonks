@@ -16,6 +16,8 @@ import IntervalButtons from "../../components/Chart/IntervalButtons";
 import ChangeChartButtons from "../../components/Chart/ChangeChartButtons";
 import TradeDialog from "../../components/TradeDialog/TradeDialog";
 import PurchaseHistory from "../../sections/PurchaseHistory";
+import LoginDialog from "../../components/Auth/Login";
+import { useAuth } from "../../shared/context/auth";
 
 const TradeButton = styled(Button)(({ theme }) => ({
   textTransform: "capitalize",
@@ -171,11 +173,12 @@ const LatestDataHorizontalBox = styled(Box)(({ theme }) => ({
   justifyContent: "space-between",
 }));
 
-const LatestDataHorizontalNumbersBox = styled(Box)(({ theme }) => ({
+const LatestDataHorizontalNumbersTypography = styled(Box)(({ theme }) => ({
   display: "flex",
-  maxWidth: "8rem",
-  [theme.breakpoints.down("md")]: {
-    // width: "5rem"
+  maxWidth: "10rem",
+  textAlign: "right",
+  [theme.breakpoints.down("sm")]: {
+    maxWidth: "8rem",
   },
 }));
 
@@ -187,9 +190,14 @@ const TradeButtonBox = styled(Box)(({ theme }) => ({
 
 const StyledChart = styled(Chart)(({ theme }) => ({}));
 
+const StyledBox = styled(Box)(({ theme }) => ({
+  backgroundColor: theme.palette.background.main,
+}));
+
 const StockOverview = () => {
   const router = useRouter();
   const theme = useTheme();
+  const { isAuthenticated } = useAuth();
 
   const [companyProfile, setCompanyProfile] = useState([]);
   const [chartData, setChartData] = useState([]);
@@ -202,6 +210,11 @@ const StockOverview = () => {
   const [isTradeDialogOpen, setIsTradeDialogOpen] = useState(false);
 
   const handleTradeDialogClose = () => setIsTradeDialogOpen(false);
+
+  const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false);
+
+  const openLoginDialog = () => setIsLoginDialogOpen(true);
+  const closeLoginDialog = () => setIsLoginDialogOpen(false);
 
   useEffect(() => {
     const getCompanyInformation = async function () {
@@ -404,7 +417,7 @@ const StockOverview = () => {
   ];
 
   return (
-    <div>
+    <StyledBox component="div">
       <Container maxWidth="lg">
         {companyProfile.length != 0 && (
           <div>
@@ -474,7 +487,7 @@ const StockOverview = () => {
         )}
         {latestData.length != 0 && (
           <LatestDataBox variant="div">
-            <LatestDataLeftSideBox variant="div">
+            <LatestDataLeftSideBox component="div">
               <LatestDataSecondaryTypography variant="body1" component={"span"}>
                 Seneste lukkekurs
               </LatestDataSecondaryTypography>
@@ -491,6 +504,7 @@ const StockOverview = () => {
                 }}
                 variant="body1"
                 component={"span"}
+                variant="body1"
               >
                 {latestData.changePercent.toFixed(2)}%
               </LatestDataPrimaryTypography>
@@ -500,39 +514,42 @@ const StockOverview = () => {
                 <LatestDataSecondaryTypography
                   variant="body1"
                   component={"span"}
+                  variant="body1"
                 >
                   Høj:{" "}
                 </LatestDataSecondaryTypography>
                 <LatestDataPrimaryTypography variant="body1" component={"span"}>
-                  <LatestDataHorizontalNumbersBox>
+                  <LatestDataHorizontalNumbersTypography variant="body1">
                     ${latestData.high.toFixed(2)}
-                  </LatestDataHorizontalNumbersBox>
+                  </LatestDataHorizontalNumbersTypography>
                 </LatestDataPrimaryTypography>
               </LatestDataHorizontalBox>
-              <LatestDataHorizontalBox>
+              <LatestDataHorizontalBox component="div">
                 <LatestDataSecondaryTypography
                   variant="body1"
                   component={"span"}
+                  variant="body1"
                 >
                   Lav:{" "}
                 </LatestDataSecondaryTypography>
                 <LatestDataPrimaryTypography variant="body1" component={"span"}>
-                  <LatestDataHorizontalNumbersBox>
+                  <LatestDataHorizontalNumbersTypography variant="body1">
                     ${latestData.low.toFixed(2)}
-                  </LatestDataHorizontalNumbersBox>
+                  </LatestDataHorizontalNumbersTypography>
                 </LatestDataPrimaryTypography>
               </LatestDataHorizontalBox>
-              <LatestDataHorizontalBox>
+              <LatestDataHorizontalBox component="div">
                 <LatestDataSecondaryTypography
                   variant="body1"
                   component={"span"}
+                  variant="body1"
                 >
                   Volume:{" "}
                 </LatestDataSecondaryTypography>
                 <LatestDataPrimaryTypography variant="body1" component={"span"}>
-                  <LatestDataHorizontalNumbersBox>
+                  <LatestDataHorizontalNumbersTypography variant="body1">
                     {bigNumberToNameString(latestData.volume)}
-                  </LatestDataHorizontalNumbersBox>
+                  </LatestDataHorizontalNumbersTypography>
                 </LatestDataPrimaryTypography>
               </LatestDataHorizontalBox>
             </LatestDataRightSideBox>
@@ -553,15 +570,20 @@ const StockOverview = () => {
           <TradeButtonBox>
             <TradeButton
               variant="contained"
-              onClick={() => setIsTradeDialogOpen(true)}
+              onClick={() =>
+                isAuthenticated ? setIsTradeDialogOpen(true) : openLoginDialog()
+              }
             >
               Køb eller sælg
             </TradeButton>
-            <TradeDialog
-              open={isTradeDialogOpen}
-              handleClose={handleTradeDialogClose}
-              companyProfile={companyProfile}
-            />
+            {companyProfile.length != 0 && (
+              <TradeDialog
+                open={isTradeDialogOpen}
+                handleClose={handleTradeDialogClose}
+                companyProfile={companyProfile}
+                currentTab="buy"
+              />
+            )}
           </TradeButtonBox>
         </div>
       )}
@@ -576,7 +598,15 @@ const StockOverview = () => {
           )}
         </Container>
       )}
-    </div>
+      <LoginDialog
+        open={isLoginDialogOpen}
+        handleClose={closeLoginDialog}
+        onSuccessFunc={() => {
+          setIsTradeDialogOpen(true);
+        }}
+        title="Log ind for at købe aktier"
+      />
+    </StyledBox>
   );
 };
 

@@ -11,12 +11,16 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import FormHelperText from "@mui/material/FormHelperText";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import TextField from "@mui/material/TextField";
+import Router from "next/router";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
 import { useAuth } from "../../shared/context/auth";
+import api from "../../services/api";
 
 const LogoImage = styled("img")(({ theme }) => ({
   width: "100%",
@@ -190,28 +194,84 @@ const CloseButton = styled(Button)(({ theme }) => ({
 }));
 
 const TradeDialog = (props) => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, selectedGame } = useAuth();
 
   const handleClose = props.handleClose;
   let open = isAuthenticated ? props.open : false;
   const companyProfile = props.companyProfile;
 
+  const symbol = companyProfile.symbol;
+
   const theme = useTheme();
   const fullscreen = useMediaQuery(theme.breakpoints.down("md"));
 
   const [selectedStockGame, setSelectedStockGame] = useState("");
-  const [currentTab, setCurrentTab] = useState(0);
+  const [currentTab, setCurrentTab] = useState(
+    props.currentTab == "buy" ? 0 : 1
+  );
   const [inputBalance, setInputBalance] = useState(0);
   const [inputAmount, setInputAmount] = useState(0);
 
+  const [games, setGames] = useState([]);
+  const [stockPrice, setStockPrice] = useState(null);
+
+  // snack bar state
+  const [snackbarSuccessOpen, setSnackbarSuccessOpen] = useState(false);
+  const handleSnackbarSuccessClose = () => setSnackbarSuccessOpen(false);
+  const handleSnackbarSuccessOpen = () => setSnackbarSuccessOpen(true);
+
+  const [snackbarErrorOpen, setSnackbarErrorOpen] = useState(false);
+  const handleSnackbarErrorClose = () => setSnackbarErrorOpen(false);
+  const handleSnackbarErrorOpen = () => setSnackbarErrorOpen(true);
+
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
+  useEffect(() => {
+    async function getGames() {
+      await api
+        .get("/game/get_user_games")
+        .then((response) => {
+          if (response.status == 200 || response.statusCode == 200) {
+            setGames(response.data);
+            setSelectedStockGame(selectedGame);
+          } else {
+            Router.push("/error-page");
+          }
+        })
+        .catch((err) => Router.push("/error-page"));
+    }
+
+    async function getStockPrice() {
+      await api
+        .get(`/stock/get_stock_price?symbol=${symbol}`)
+        .then((response) => {
+          if (response.status == 200 || response.statusCode == 200) {
+            setStockPrice(response.data.price);
+          } else {
+            Router.push("error-page");
+          }
+        })
+        .catch((err) => Router.push("/error-page"));
+    }
+
+    if (isAuthenticated && open && games.length == 0) getGames();
+    if (open && symbol) getStockPrice();
+
+    if (!open) {
+      setStockPrice(null);
+    }
+  }, [open, symbol]);
+
   const handleBalanceChange = (event) => {
     setInputBalance(event.target.value);
-    setInputAmount(event.target.value / 1000); // new value divided with stock price
+    setInputAmount(event.target.value / stockPrice); // new value divided with stock price
   };
 
   const handleAmountChange = (event) => {
     setInputAmount(event.target.value);
-    setInputBalance(event.target.value * 1000); // new value times stock price
+    setInputBalance(event.target.value * stockPrice); // new value times stock price
   };
 
   const onFocusOutFunc = (event) => {
@@ -222,7 +282,6 @@ const TradeDialog = (props) => {
   };
 
   const onFocusTextField = (event) => {
-    console.log(event);
     if (event.target.value == 0) {
       setInputAmount("");
       setInputBalance("");
@@ -240,21 +299,70 @@ const TradeDialog = (props) => {
     };
   }
 
-  const onBuy = () => {
-    console.log(
-      `Purchase went through with following values: ${inputBalance}, ${inputAmount} ${companyProfile.symbol}`
-    );
+  const onBuy = async () => {
     setInputAmount(0);
     setInputBalance(0);
+    console.log("On buy function ran");
 
-    handleClose();
+    await api({
+      method: "POST",
+      url: "stock/buy_stock",
+      data: {
+        spendingPrice: inputBalance,
+        symbol: companyProfile.symbol,
+        market: companyProfile.exchangeShortName,
+        gameId: selectedStockGame,
+      },
+    })
+      .then((response) => {
+        if (response.status == 200 || response.statusCode == 200) {
+          console.log("Purchase went through");
+          handleClose();
+          handleSnackbarSuccessOpen();
+        } else {
+          console.log("Purchase declined");
+          handleClose();
+          handleSnackbarErrorOpen();
+        }
+      })
+      .catch((err) => {
+        console.log("Purchase declined");
+        handleClose();
+        handleSnackbarErrorOpen();
+      });
   };
 
-  const onSell = () => {
-    console.log(
-      `Sell went through with following values: ${inputBalance}, ${inputAmount} ${companyProfile.symbol}`
-    );
-    handleClose();
+  const onSell = async () => {
+    setInputAmount(0);
+    setInputBalance(0);
+    console.log("On sell function ran");
+
+    await api({
+      method: "POST",
+      url: "stock/sell_stock",
+      data: {
+        spendingPrice: inputBalance,
+        symbol: companyProfile.symbol,
+        market: companyProfile.exchangeShortName,
+        gameId: selectedStockGame,
+      },
+    })
+      .then((response) => {
+        if (response.status == 200 || response.statusCode == 200) {
+          console.log("Sale went through");
+          handleClose();
+          handleSnackbarSuccessOpen();
+        } else {
+          console.log("Sale declined");
+          handleClose();
+          handleSnackbarErrorOpen();
+        }
+      })
+      .catch((err) => {
+        console.log("Sale declined");
+        handleClose();
+        handleSnackbarErrorOpen();
+      });
   };
 
   return (
@@ -295,7 +403,7 @@ const TradeDialog = (props) => {
                 }}
               >
                 <PriceTypography variant="body1">
-                  Stykpris: 1000 kr.
+                  Stykpris: ${stockPrice}
                 </PriceTypography>
               </Box>
             </Box>
@@ -311,9 +419,13 @@ const TradeDialog = (props) => {
                   label="Aktiespil"
                   onChange={(event) => setSelectedStockGame(event.target.value)}
                 >
-                  <StockGameMenuItem value={"Test1"}>Test1</StockGameMenuItem>
-                  <StockGameMenuItem value={"Test2"}>Test2</StockGameMenuItem>
-                  <StockGameMenuItem value={"Test3"}>Test3</StockGameMenuItem>
+                  {games.map((game) => {
+                    return (
+                      <StockGameMenuItem key={game.urlId} value={game._id}>
+                        {game.name}
+                      </StockGameMenuItem>
+                    );
+                  })}
                 </StockGameSelect>
                 <FormHelperText>Vælg aktiespil</FormHelperText>
               </StockGameFormControl>
@@ -328,7 +440,7 @@ const TradeDialog = (props) => {
                 <BalanceSecondaryTypography>
                   Nuværende beholdning:{" "}
                 </BalanceSecondaryTypography>
-                <BalancePrimaryTypography>12345 kr.</BalancePrimaryTypography>
+                <BalancePrimaryTypography>$12345</BalancePrimaryTypography>
               </Box>
               <Box
                 variant="div"
@@ -444,6 +556,32 @@ const TradeDialog = (props) => {
           </StyledDialogContent>
         </Dialog>
       )}
+      <Snackbar
+        open={snackbarSuccessOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackbarSuccessClose}
+      >
+        <Alert
+          onClose={handleSnackbarSuccessClose}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          Handel gennemført
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={snackbarErrorOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackbarErrorClose}
+      >
+        <Alert
+          onClose={handleSnackbarErrorClose}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          Handel kunne ikke gennemføres
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

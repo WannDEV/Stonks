@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Router from "next/router";
 import { styled, alpha, useTheme } from "@mui/material/styles";
 import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
 
 import { useAuth } from "../shared/context/auth";
 import api from "../services/api";
@@ -9,6 +10,11 @@ import GameInformationSection from "../sections/GameInformationSection";
 import InvestmentOverviewSection from "../sections/InvestmentOverviewSection";
 import ShareLinkSection from "../sections/ShareLinkSection";
 import LeaderboardSection from "../sections/LeaderboardSection";
+import StocksInQueueSection from "../sections/StocksInQueueSection";
+
+const StyledBox = styled(Box)(({ theme }) => ({
+  backgroundColor: theme.palette.background.main,
+}));
 
 const Dashboard = () => {
   const { selectedGame, user, loadingSelectedGame } = useAuth();
@@ -16,6 +22,9 @@ const Dashboard = () => {
 
   const [gameInformation, setGameInformation] = useState([]);
   const [userBalance, setUserBalance] = useState(null);
+  const [userDisplayBalance, setUserDisplayBalance] = useState(null);
+  const [ownedStocks, setOwnedStocks] = useState([]);
+  const [isLoadingOwnedStocks, setIsLoadingOwnedStocks] = useState(true);
 
   useEffect(() => {
     async function getPopulatedGame() {
@@ -31,7 +40,41 @@ const Dashboard = () => {
         .catch((err) => Router.push("/error-page"));
     }
 
-    if (selectedGame) getPopulatedGame();
+    async function getAllOwnedStocks() {
+      await api
+        .get(`stock/get_all_owned_stocks?gameId=${selectedGame}`)
+        .then((response) => {
+          console.log(response);
+          if (response.status == 200 || response.statusCode == 200) {
+            setOwnedStocks(response.data);
+            setIsLoadingOwnedStocks(false);
+          } else {
+            Router.push("/error-page");
+          }
+        })
+        .catch((err) => Router.push("/error-page"));
+    }
+
+    async function getLeaderboard() {
+      console.log("get leaderboard function ran");
+      await api
+        .get(`game/get_leaderboard?gameId=${selectedGame}`)
+        .then((response) => {
+          console.log("made api call");
+          if (response.status == 200 || response.statusCode == 200) {
+            console.log(response);
+          } else {
+            Router.push("/error-page");
+          }
+        })
+        .catch((err) => Router.push("/error-page"));
+    }
+
+    if (selectedGame) {
+      getPopulatedGame();
+      getAllOwnedStocks();
+      getLeaderboard();
+    }
   }, [selectedGame]);
 
   useEffect(() => {
@@ -39,6 +82,7 @@ const Dashboard = () => {
       for (let i = 0; i < gameInformation.balances.length; ++i) {
         if (gameInformation.balances[i].userId == user._id) {
           setUserBalance(gameInformation.balances[i].balance);
+          setUserDisplayBalance(gameInformation.balances[i].displayBalance);
         }
       }
     }
@@ -51,7 +95,7 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div>
+    <StyledBox>
       {selectedGame != "" && gameInformation.length != 0 && (
         <Container maxWidth="lg">
           <GameInformationSection
@@ -68,8 +112,21 @@ const Dashboard = () => {
             ]}
             allowedMarkets={gameInformation.allowedMarkets}
           />
-          {userBalance != null && (
-            <InvestmentOverviewSection userBalance={userBalance} />
+          {userBalance != null &&
+            userDisplayBalance != null &&
+            gameInformation.startBalance &&
+            !isLoadingOwnedStocks && (
+              <InvestmentOverviewSection
+                userBalance={userBalance}
+                userDisplayBalance={userDisplayBalance}
+                ownedStocks={ownedStocks}
+                startBalance={gameInformation.startBalance}
+              />
+            )}
+          {gameInformation.pending_stocks.length != 0 && (
+            <StocksInQueueSection
+              pendingStocks={gameInformation.pending_stocks}
+            />
           )}
           <ShareLinkSection urlId={gameInformation.urlId} />
           <LeaderboardSection
@@ -144,7 +201,7 @@ const Dashboard = () => {
           />
         </Container>
       )}
-    </div>
+    </StyledBox>
   );
 };
 

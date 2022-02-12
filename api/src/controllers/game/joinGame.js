@@ -6,7 +6,7 @@ import Game from "../../db/models/game";
 import User from "../../db/models/user";
 
 const joinGame = async function (req, res, next) {
-  const urlId = req.body.urlId;
+  const urlId = req.body.urlId.toUpperCase();
   const id = res.locals.decodedAccessToken.id;
 
   // check if id is a string and not empty
@@ -30,12 +30,13 @@ const joinGame = async function (req, res, next) {
       if (await game) {
         gameId = await game._id;
         await game.users.addToSet(await user);
-        await game.save();
         await user.games.addToSet(await game);
-        await user.balances.addToSet({
-          gameId: await game._id,
+        await game.balances.addToSet({
+          userId: await user._id,
           balance: await game.startBalance,
+          displayBalance: await game.startBalance,
         });
+        await game.save();
         await user.save();
       } else return next(boom.badRequest("urlId does not exist"));
     } else return next(boom.badRequest("User could not be found"));

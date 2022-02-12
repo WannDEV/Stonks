@@ -1,0 +1,814 @@
+{
+  message: 'MongoDB Atlas reconnected!',
+  level: 'warn',
+  timestamp: '2022-01-26 08:25:07'
+}
+{
+  message: 'MongoDB Atlas reconnected!',
+  level: 'warn',
+  timestamp: '2022-01-26 08:41:20'
+}
+{
+  error: TypeError: Cannot read property 'active_from' of undefined
+      at ChangeStream.<anonymous> (C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\src\/index.js:136:23)
+      at ChangeStream.emit (events.js:315:20)
+      at ChangeStream.EventEmitter.emit (domain.js:467:12)
+      at ChangeStream.<anonymous> (C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\node_modules\mongoose\lib\cursor\ChangeStream.js:41:51)
+      at ChangeStream.emit (events.js:315:20)
+      at ChangeStream.EventEmitter.emit (domain.js:467:12)
+      at processNewChange (C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\node_modules\mongodb\src\change_stream.ts:716:38)
+      at Readable.<anonymous> (C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\node_modules\mongodb\src\change_stream.ts:669:31)
+      at Readable.emit (events.js:315:20)
+      at Readable.EventEmitter.emit (domain.js:467:12),
+  level: 'error',
+  message: "uncaughtException: Cannot read property 'active_from' of undefined\n" +
+    "TypeError: Cannot read property 'active_from' of undefined\n" +
+    '    at ChangeStream.<anonymous> (C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\/index.js:136:23)\n' +
+    '    at ChangeStream.emit (events.js:315:20)\n' +
+    '    at ChangeStream.EventEmitter.emit (domain.js:467:12)\n' +
+    '    at ChangeStream.<anonymous> (C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\mongoose\\lib\\cursor\\ChangeStream.js:41:51)\n' +
+    '    at ChangeStream.emit (events.js:315:20)\n' +
+    '    at ChangeStream.EventEmitter.emit (domain.js:467:12)\n' +
+    '    at processNewChange (C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\mongodb\\src\\change_stream.ts:716:38)\n' +
+    '    at Readable.<anonymous> (C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\mongodb\\src\\change_stream.ts:669:31)\n' +
+    '    at Readable.emit (events.js:315:20)\n' +
+    '    at Readable.EventEmitter.emit (domain.js:467:12)',
+  stack: "TypeError: Cannot read property 'active_from' of undefined\n" +
+    '    at ChangeStream.<anonymous> (C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\/index.js:136:23)\n' +
+    '    at ChangeStream.emit (events.js:315:20)\n' +
+    '    at ChangeStream.EventEmitter.emit (domain.js:467:12)\n' +
+    '    at ChangeStream.<anonymous> (C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\mongoose\\lib\\cursor\\ChangeStream.js:41:51)\n' +
+    '    at ChangeStream.emit (events.js:315:20)\n' +
+    '    at ChangeStream.EventEmitter.emit (domain.js:467:12)\n' +
+    '    at processNewChange (C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\mongodb\\src\\change_stream.ts:716:38)\n' +
+    '    at Readable.<anonymous> (C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\mongodb\\src\\change_stream.ts:669:31)\n' +
+    '    at Readable.emit (events.js:315:20)\n' +
+    '    at Readable.EventEmitter.emit (domain.js:467:12)',
+  exception: true,
+  date: 'Thu Jan 27 2022 22:46:34 GMT+0100 (Central European Standard Time)',
+  process: {
+    pid: 22092,
+    uid: null,
+    gid: null,
+    cwd: 'C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker',
+    execPath: 'C:\\Program Files\\nodejs\\node.exe',
+    version: 'v14.15.5',
+    argv: [
+      'node',
+      'C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\index.js'
+    ],
+    memoryUsage: {
+      rss: 115286016,
+      heapTotal: 79319040,
+      heapUsed: 48927176,
+      external: 21002388,
+      arrayBuffers: 18812155
+    }
+  },
+  os: { loadavg: [ 0, 0, 0 ], uptime: 556917 },
+  trace: [
+    {
+      column: 23,
+      file: 'C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\/index.js',
+      function: null,
+      line: 136,
+      method: null,
+      native: false
+    },
+    {
+      column: 20,
+      file: 'events.js',
+      function: 'ChangeStream.emit',
+      line: 315,
+      method: 'emit',
+      native: false
+    },
+    {
+      column: 12,
+      file: 'domain.js',
+      function: 'ChangeStream.EventEmitter.emit',
+      line: 467,
+      method: 'emit',
+      native: false
+    },
+    {
+      column: 51,
+      file: 'C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\mongoose\\lib\\cursor\\ChangeStream.js',
+      function: null,
+      line: 41,
+      method: null,
+      native: false
+    },
+    {
+      column: 20,
+      file: 'events.js',
+      function: 'ChangeStream.emit',
+      line: 315,
+      method: 'emit',
+      native: false
+    },
+    {
+      column: 12,
+      file: 'domain.js',
+      function: 'ChangeStream.EventEmitter.emit',
+      line: 467,
+      method: 'emit',
+      native: false
+    },
+    {
+      column: 38,
+      file: 'C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\mongodb\\src\\change_stream.ts',
+      function: 'processNewChange',
+      line: 716,
+      method: null,
+      native: false
+    },
+    {
+      column: 31,
+      file: 'C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\mongodb\\src\\change_stream.ts',
+      function: null,
+      line: 669,
+      method: null,
+      native: false
+    },
+    {
+      column: 20,
+      file: 'events.js',
+      function: 'Readable.emit',
+      line: 315,
+      method: 'emit',
+      native: false
+    },
+    {
+      column: 12,
+      file: 'domain.js',
+      function: 'Readable.EventEmitter.emit',
+      line: 467,
+      method: 'emit',
+      native: false
+    }
+  ],
+  timestamp: '2022-01-27 10:46:34'
+}
+{
+  error: TypeError: Cannot read property 'active_from' of undefined
+      at ChangeStream.<anonymous> (C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\src\/index.js:136:23)
+      at ChangeStream.emit (events.js:315:20)
+      at ChangeStream.EventEmitter.emit (domain.js:467:12)
+      at ChangeStream.<anonymous> (C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\node_modules\mongoose\lib\cursor\ChangeStream.js:41:51)
+      at ChangeStream.emit (events.js:315:20)
+      at ChangeStream.EventEmitter.emit (domain.js:467:12)
+      at processNewChange (C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\node_modules\mongodb\src\change_stream.ts:716:38)
+      at Readable.<anonymous> (C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\node_modules\mongodb\src\change_stream.ts:669:31)
+      at Readable.emit (events.js:315:20)
+      at Readable.EventEmitter.emit (domain.js:467:12),
+  level: 'error',
+  message: "uncaughtException: Cannot read property 'active_from' of undefined\n" +
+    "TypeError: Cannot read property 'active_from' of undefined\n" +
+    '    at ChangeStream.<anonymous> (C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\/index.js:136:23)\n' +
+    '    at ChangeStream.emit (events.js:315:20)\n' +
+    '    at ChangeStream.EventEmitter.emit (domain.js:467:12)\n' +
+    '    at ChangeStream.<anonymous> (C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\mongoose\\lib\\cursor\\ChangeStream.js:41:51)\n' +
+    '    at ChangeStream.emit (events.js:315:20)\n' +
+    '    at ChangeStream.EventEmitter.emit (domain.js:467:12)\n' +
+    '    at processNewChange (C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\mongodb\\src\\change_stream.ts:716:38)\n' +
+    '    at Readable.<anonymous> (C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\mongodb\\src\\change_stream.ts:669:31)\n' +
+    '    at Readable.emit (events.js:315:20)\n' +
+    '    at Readable.EventEmitter.emit (domain.js:467:12)',
+  stack: "TypeError: Cannot read property 'active_from' of undefined\n" +
+    '    at ChangeStream.<anonymous> (C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\/index.js:136:23)\n' +
+    '    at ChangeStream.emit (events.js:315:20)\n' +
+    '    at ChangeStream.EventEmitter.emit (domain.js:467:12)\n' +
+    '    at ChangeStream.<anonymous> (C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\mongoose\\lib\\cursor\\ChangeStream.js:41:51)\n' +
+    '    at ChangeStream.emit (events.js:315:20)\n' +
+    '    at ChangeStream.EventEmitter.emit (domain.js:467:12)\n' +
+    '    at processNewChange (C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\mongodb\\src\\change_stream.ts:716:38)\n' +
+    '    at Readable.<anonymous> (C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\mongodb\\src\\change_stream.ts:669:31)\n' +
+    '    at Readable.emit (events.js:315:20)\n' +
+    '    at Readable.EventEmitter.emit (domain.js:467:12)',
+  exception: true,
+  date: 'Thu Jan 27 2022 22:48:56 GMT+0100 (Central European Standard Time)',
+  process: {
+    pid: 1636,
+    uid: null,
+    gid: null,
+    cwd: 'C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker',
+    execPath: 'C:\\Program Files\\nodejs\\node.exe',
+    version: 'v14.15.5',
+    argv: [
+      'node',
+      'C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\index.js'
+    ],
+    memoryUsage: {
+      rss: 114884608,
+      heapTotal: 79843328,
+      heapUsed: 49730664,
+      external: 21050763,
+      arrayBuffers: 18860530
+    }
+  },
+  os: { loadavg: [ 0, 0, 0 ], uptime: 557058 },
+  trace: [
+    {
+      column: 23,
+      file: 'C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\/index.js',
+      function: null,
+      line: 136,
+      method: null,
+      native: false
+    },
+    {
+      column: 20,
+      file: 'events.js',
+      function: 'ChangeStream.emit',
+      line: 315,
+      method: 'emit',
+      native: false
+    },
+    {
+      column: 12,
+      file: 'domain.js',
+      function: 'ChangeStream.EventEmitter.emit',
+      line: 467,
+      method: 'emit',
+      native: false
+    },
+    {
+      column: 51,
+      file: 'C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\mongoose\\lib\\cursor\\ChangeStream.js',
+      function: null,
+      line: 41,
+      method: null,
+      native: false
+    },
+    {
+      column: 20,
+      file: 'events.js',
+      function: 'ChangeStream.emit',
+      line: 315,
+      method: 'emit',
+      native: false
+    },
+    {
+      column: 12,
+      file: 'domain.js',
+      function: 'ChangeStream.EventEmitter.emit',
+      line: 467,
+      method: 'emit',
+      native: false
+    },
+    {
+      column: 38,
+      file: 'C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\mongodb\\src\\change_stream.ts',
+      function: 'processNewChange',
+      line: 716,
+      method: null,
+      native: false
+    },
+    {
+      column: 31,
+      file: 'C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\mongodb\\src\\change_stream.ts',
+      function: null,
+      line: 669,
+      method: null,
+      native: false
+    },
+    {
+      column: 20,
+      file: 'events.js',
+      function: 'Readable.emit',
+      line: 315,
+      method: 'emit',
+      native: false
+    },
+    {
+      column: 12,
+      file: 'domain.js',
+      function: 'Readable.EventEmitter.emit',
+      line: 467,
+      method: 'emit',
+      native: false
+    }
+  ],
+  timestamp: '2022-01-27 10:48:56'
+}
+{
+  error: TypeError: Cannot read property 'active_from' of undefined
+      at ChangeStream.<anonymous> (C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\src\/index.js:137:23)
+      at ChangeStream.emit (events.js:315:20)
+      at ChangeStream.EventEmitter.emit (domain.js:467:12)
+      at ChangeStream.<anonymous> (C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\node_modules\mongoose\lib\cursor\ChangeStream.js:41:51)
+      at ChangeStream.emit (events.js:315:20)
+      at ChangeStream.EventEmitter.emit (domain.js:467:12)
+      at processNewChange (C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\node_modules\mongodb\src\change_stream.ts:716:38)
+      at Readable.<anonymous> (C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\node_modules\mongodb\src\change_stream.ts:669:31)
+      at Readable.emit (events.js:315:20)
+      at Readable.EventEmitter.emit (domain.js:467:12),
+  level: 'error',
+  message: "uncaughtException: Cannot read property 'active_from' of undefined\n" +
+    "TypeError: Cannot read property 'active_from' of undefined\n" +
+    '    at ChangeStream.<anonymous> (C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\/index.js:137:23)\n' +
+    '    at ChangeStream.emit (events.js:315:20)\n' +
+    '    at ChangeStream.EventEmitter.emit (domain.js:467:12)\n' +
+    '    at ChangeStream.<anonymous> (C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\mongoose\\lib\\cursor\\ChangeStream.js:41:51)\n' +
+    '    at ChangeStream.emit (events.js:315:20)\n' +
+    '    at ChangeStream.EventEmitter.emit (domain.js:467:12)\n' +
+    '    at processNewChange (C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\mongodb\\src\\change_stream.ts:716:38)\n' +
+    '    at Readable.<anonymous> (C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\mongodb\\src\\change_stream.ts:669:31)\n' +
+    '    at Readable.emit (events.js:315:20)\n' +
+    '    at Readable.EventEmitter.emit (domain.js:467:12)',
+  stack: "TypeError: Cannot read property 'active_from' of undefined\n" +
+    '    at ChangeStream.<anonymous> (C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\/index.js:137:23)\n' +
+    '    at ChangeStream.emit (events.js:315:20)\n' +
+    '    at ChangeStream.EventEmitter.emit (domain.js:467:12)\n' +
+    '    at ChangeStream.<anonymous> (C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\mongoose\\lib\\cursor\\ChangeStream.js:41:51)\n' +
+    '    at ChangeStream.emit (events.js:315:20)\n' +
+    '    at ChangeStream.EventEmitter.emit (domain.js:467:12)\n' +
+    '    at processNewChange (C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\mongodb\\src\\change_stream.ts:716:38)\n' +
+    '    at Readable.<anonymous> (C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\mongodb\\src\\change_stream.ts:669:31)\n' +
+    '    at Readable.emit (events.js:315:20)\n' +
+    '    at Readable.EventEmitter.emit (domain.js:467:12)',
+  exception: true,
+  date: 'Thu Jan 27 2022 22:50:25 GMT+0100 (Central European Standard Time)',
+  process: {
+    pid: 13904,
+    uid: null,
+    gid: null,
+    cwd: 'C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker',
+    execPath: 'C:\\Program Files\\nodejs\\node.exe',
+    version: 'v14.15.5',
+    argv: [
+      'node',
+      'C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\index.js'
+    ],
+    memoryUsage: {
+      rss: 115593216,
+      heapTotal: 79056896,
+      heapUsed: 48128792,
+      external: 21011736,
+      arrayBuffers: 18821503
+    }
+  },
+  os: { loadavg: [ 0, 0, 0 ], uptime: 557147 },
+  trace: [
+    {
+      column: 23,
+      file: 'C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\/index.js',
+      function: null,
+      line: 137,
+      method: null,
+      native: false
+    },
+    {
+      column: 20,
+      file: 'events.js',
+      function: 'ChangeStream.emit',
+      line: 315,
+      method: 'emit',
+      native: false
+    },
+    {
+      column: 12,
+      file: 'domain.js',
+      function: 'ChangeStream.EventEmitter.emit',
+      line: 467,
+      method: 'emit',
+      native: false
+    },
+    {
+      column: 51,
+      file: 'C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\mongoose\\lib\\cursor\\ChangeStream.js',
+      function: null,
+      line: 41,
+      method: null,
+      native: false
+    },
+    {
+      column: 20,
+      file: 'events.js',
+      function: 'ChangeStream.emit',
+      line: 315,
+      method: 'emit',
+      native: false
+    },
+    {
+      column: 12,
+      file: 'domain.js',
+      function: 'ChangeStream.EventEmitter.emit',
+      line: 467,
+      method: 'emit',
+      native: false
+    },
+    {
+      column: 38,
+      file: 'C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\mongodb\\src\\change_stream.ts',
+      function: 'processNewChange',
+      line: 716,
+      method: null,
+      native: false
+    },
+    {
+      column: 31,
+      file: 'C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\mongodb\\src\\change_stream.ts',
+      function: null,
+      line: 669,
+      method: null,
+      native: false
+    },
+    {
+      column: 20,
+      file: 'events.js',
+      function: 'Readable.emit',
+      line: 315,
+      method: 'emit',
+      native: false
+    },
+    {
+      column: 12,
+      file: 'domain.js',
+      function: 'Readable.EventEmitter.emit',
+      line: 467,
+      method: 'emit',
+      native: false
+    }
+  ],
+  timestamp: '2022-01-27 10:50:25'
+}
+{
+  error: Error: Cannot find module './utils/logger/winston'
+  Require stack:
+  - C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\src\interval_methods\buy_stock\checkPendingBuyStocks.js
+  - C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\src\index.js
+      at Function.Module._resolveFilename (internal/modules/cjs/loader.js:880:15)
+      at Function.Module._load (internal/modules/cjs/loader.js:725:27)
+      at Module.require (internal/modules/cjs/loader.js:952:19)
+      at require (internal/modules/cjs/helpers.js:88:18)
+      at Object.<anonymous> (C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\src\interval_methods\buy_stock\/checkPendingBuyStocks.js:4:1)
+      at Module._compile (internal/modules/cjs/loader.js:1063:30)
+      at Module._compile (C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\node_modules\pirates\lib\index.js:136:24)
+      at Module._extensions..js (internal/modules/cjs/loader.js:1092:10)
+      at Object.newLoader [as .js] (C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\node_modules\pirates\lib\index.js:141:7)
+      at Module.load (internal/modules/cjs/loader.js:928:32) {
+    code: 'MODULE_NOT_FOUND',
+    requireStack: [
+      'C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\interval_methods\\buy_stock\\checkPendingBuyStocks.js',
+      'C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\index.js'
+    ]
+  },
+  level: 'error',
+  message: "uncaughtException: Cannot find module './utils/logger/winston'\n" +
+    'Require stack:\n' +
+    '- C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\interval_methods\\buy_stock\\checkPendingBuyStocks.js\n' +
+    '- C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\index.js\n' +
+    "Error: Cannot find module './utils/logger/winston'\n" +
+    'Require stack:\n' +
+    '- C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\interval_methods\\buy_stock\\checkPendingBuyStocks.js\n' +
+    '- C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\index.js\n' +
+    '    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:880:15)\n' +
+    '    at Function.Module._load (internal/modules/cjs/loader.js:725:27)\n' +
+    '    at Module.require (internal/modules/cjs/loader.js:952:19)\n' +
+    '    at require (internal/modules/cjs/helpers.js:88:18)\n' +
+    '    at Object.<anonymous> (C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\interval_methods\\buy_stock\\/checkPendingBuyStocks.js:4:1)\n' +
+    '    at Module._compile (internal/modules/cjs/loader.js:1063:30)\n' +
+    '    at Module._compile (C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\pirates\\lib\\index.js:136:24)\n' +
+    '    at Module._extensions..js (internal/modules/cjs/loader.js:1092:10)\n' +
+    '    at Object.newLoader [as .js] (C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\pirates\\lib\\index.js:141:7)\n' +
+    '    at Module.load (internal/modules/cjs/loader.js:928:32)',
+  stack: "Error: Cannot find module './utils/logger/winston'\n" +
+    'Require stack:\n' +
+    '- C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\interval_methods\\buy_stock\\checkPendingBuyStocks.js\n' +
+    '- C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\index.js\n' +
+    '    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:880:15)\n' +
+    '    at Function.Module._load (internal/modules/cjs/loader.js:725:27)\n' +
+    '    at Module.require (internal/modules/cjs/loader.js:952:19)\n' +
+    '    at require (internal/modules/cjs/helpers.js:88:18)\n' +
+    '    at Object.<anonymous> (C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\interval_methods\\buy_stock\\/checkPendingBuyStocks.js:4:1)\n' +
+    '    at Module._compile (internal/modules/cjs/loader.js:1063:30)\n' +
+    '    at Module._compile (C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\pirates\\lib\\index.js:136:24)\n' +
+    '    at Module._extensions..js (internal/modules/cjs/loader.js:1092:10)\n' +
+    '    at Object.newLoader [as .js] (C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\pirates\\lib\\index.js:141:7)\n' +
+    '    at Module.load (internal/modules/cjs/loader.js:928:32)',
+  exception: true,
+  date: 'Sun Jan 30 2022 17:57:13 GMT+0100 (Central European Standard Time)',
+  process: {
+    pid: 25088,
+    uid: null,
+    gid: null,
+    cwd: 'C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker',
+    execPath: 'C:\\Program Files\\nodejs\\node.exe',
+    version: 'v14.15.5',
+    argv: [
+      'node',
+      'C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\index.js'
+    ],
+    memoryUsage: {
+      rss: 110231552,
+      heapTotal: 76697600,
+      heapUsed: 46202480,
+      external: 20606370,
+      arrayBuffers: 18405836
+    }
+  },
+  os: { loadavg: [ 0, 0, 0 ], uptime: 798754 },
+  trace: [
+    {
+      column: 15,
+      file: 'internal/modules/cjs/loader.js',
+      function: 'Module._resolveFilename',
+      line: 880,
+      method: '_resolveFilename',
+      native: false
+    },
+    {
+      column: 27,
+      file: 'internal/modules/cjs/loader.js',
+      function: 'Module._load',
+      line: 725,
+      method: '_load',
+      native: false
+    },
+    {
+      column: 19,
+      file: 'internal/modules/cjs/loader.js',
+      function: 'Module.require',
+      line: 952,
+      method: 'require',
+      native: false
+    },
+    {
+      column: 18,
+      file: 'internal/modules/cjs/helpers.js',
+      function: 'require',
+      line: 88,
+      method: null,
+      native: false
+    },
+    {
+      column: 1,
+      file: 'C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\interval_methods\\buy_stock\\/checkPendingBuyStocks.js',
+      function: null,
+      line: 4,
+      method: null,
+      native: false
+    },
+    {
+      column: 30,
+      file: 'internal/modules/cjs/loader.js',
+      function: 'Module._compile',
+      line: 1063,
+      method: '_compile',
+      native: false
+    },
+    {
+      column: 24,
+      file: 'C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\pirates\\lib\\index.js',
+      function: 'Module._compile',
+      line: 136,
+      method: '_compile',
+      native: false
+    },
+    {
+      column: 10,
+      file: 'internal/modules/cjs/loader.js',
+      function: 'Module._extensions..js',
+      line: 1092,
+      method: '.js',
+      native: false
+    },
+    {
+      column: 7,
+      file: 'C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\pirates\\lib\\index.js',
+      function: 'Object.newLoader [as .js]',
+      line: 141,
+      method: 'js]',
+      native: false
+    },
+    {
+      column: 32,
+      file: 'internal/modules/cjs/loader.js',
+      function: 'Module.load',
+      line: 928,
+      method: 'load',
+      native: false
+    }
+  ],
+  timestamp: '2022-01-30 05:57:13'
+}
+{
+  message: 'Aborting transaction: ReferenceError: Game is not defined',
+  level: 'error',
+  timestamp: '2022-01-31 08:03:51'
+}
+{
+  message: 'Aborting transaction: ReferenceError: Game is not defined',
+  level: 'error',
+  timestamp: '2022-01-31 08:03:51'
+}
+{
+  message: 'MongoDB Atlas reconnected!',
+  level: 'warn',
+  timestamp: '2022-01-31 09:15:17'
+}
+{
+  error: Error: Cannot find module '@hapi/boom'
+  Require stack:
+  - C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\src\interval_methods\check_pending_stocks\sellStock.js
+  - C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\src\interval_methods\check_pending_stocks\index.js
+  - C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\src\index.js
+      at Function.Module._resolveFilename (internal/modules/cjs/loader.js:880:15)
+      at Function.Module._load (internal/modules/cjs/loader.js:725:27)
+      at Module.require (internal/modules/cjs/loader.js:952:19)
+      at require (internal/modules/cjs/helpers.js:88:18)
+      at Object.<anonymous> (C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\src\interval_methods\check_pending_stocks\/sellStock.js:1:1)
+      at Module._compile (internal/modules/cjs/loader.js:1063:30)
+      at Module._compile (C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\node_modules\pirates\lib\index.js:136:24)
+      at Module._extensions..js (internal/modules/cjs/loader.js:1092:10)
+      at Object.newLoader [as .js] (C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\node_modules\pirates\lib\index.js:141:7)
+      at Module.load (internal/modules/cjs/loader.js:928:32) {
+    code: 'MODULE_NOT_FOUND',
+    requireStack: [
+      'C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\interval_methods\\check_pending_stocks\\sellStock.js',
+      'C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\interval_methods\\check_pending_stocks\\index.js',
+      'C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\index.js'
+    ]
+  },
+  level: 'error',
+  message: "uncaughtException: Cannot find module '@hapi/boom'\n" +
+    'Require stack:\n' +
+    '- C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\interval_methods\\check_pending_stocks\\sellStock.js\n' +
+    '- C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\interval_methods\\check_pending_stocks\\index.js\n' +
+    '- C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\index.js\n' +
+    "Error: Cannot find module '@hapi/boom'\n" +
+    'Require stack:\n' +
+    '- C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\interval_methods\\check_pending_stocks\\sellStock.js\n' +
+    '- C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\interval_methods\\check_pending_stocks\\index.js\n' +
+    '- C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\index.js\n' +
+    '    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:880:15)\n' +
+    '    at Function.Module._load (internal/modules/cjs/loader.js:725:27)\n' +
+    '    at Module.require (internal/modules/cjs/loader.js:952:19)\n' +
+    '    at require (internal/modules/cjs/helpers.js:88:18)\n' +
+    '    at Object.<anonymous> (C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\interval_methods\\check_pending_stocks\\/sellStock.js:1:1)\n' +
+    '    at Module._compile (internal/modules/cjs/loader.js:1063:30)\n' +
+    '    at Module._compile (C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\pirates\\lib\\index.js:136:24)\n' +
+    '    at Module._extensions..js (internal/modules/cjs/loader.js:1092:10)\n' +
+    '    at Object.newLoader [as .js] (C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\pirates\\lib\\index.js:141:7)\n' +
+    '    at Module.load (internal/modules/cjs/loader.js:928:32)',
+  stack: "Error: Cannot find module '@hapi/boom'\n" +
+    'Require stack:\n' +
+    '- C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\interval_methods\\check_pending_stocks\\sellStock.js\n' +
+    '- C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\interval_methods\\check_pending_stocks\\index.js\n' +
+    '- C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\index.js\n' +
+    '    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:880:15)\n' +
+    '    at Function.Module._load (internal/modules/cjs/loader.js:725:27)\n' +
+    '    at Module.require (internal/modules/cjs/loader.js:952:19)\n' +
+    '    at require (internal/modules/cjs/helpers.js:88:18)\n' +
+    '    at Object.<anonymous> (C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\interval_methods\\check_pending_stocks\\/sellStock.js:1:1)\n' +
+    '    at Module._compile (internal/modules/cjs/loader.js:1063:30)\n' +
+    '    at Module._compile (C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\pirates\\lib\\index.js:136:24)\n' +
+    '    at Module._extensions..js (internal/modules/cjs/loader.js:1092:10)\n' +
+    '    at Object.newLoader [as .js] (C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\pirates\\lib\\index.js:141:7)\n' +
+    '    at Module.load (internal/modules/cjs/loader.js:928:32)',
+  exception: true,
+  date: 'Fri Feb 04 2022 22:18:24 GMT+0100 (Central European Standard Time)',
+  process: {
+    pid: 17152,
+    uid: null,
+    gid: null,
+    cwd: 'C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker',
+    execPath: 'C:\\Program Files\\nodejs\\node.exe',
+    version: 'v14.15.5',
+    argv: [
+      'node',
+      'C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\index.js'
+    ],
+    memoryUsage: {
+      rss: 111955968,
+      heapTotal: 76398592,
+      heapUsed: 47831912,
+      external: 20489447,
+      arrayBuffers: 18280522
+    }
+  },
+  os: { loadavg: [ 0, 0, 0 ], uptime: 1246425 },
+  trace: [
+    {
+      column: 15,
+      file: 'internal/modules/cjs/loader.js',
+      function: 'Module._resolveFilename',
+      line: 880,
+      method: '_resolveFilename',
+      native: false
+    },
+    {
+      column: 27,
+      file: 'internal/modules/cjs/loader.js',
+      function: 'Module._load',
+      line: 725,
+      method: '_load',
+      native: false
+    },
+    {
+      column: 19,
+      file: 'internal/modules/cjs/loader.js',
+      function: 'Module.require',
+      line: 952,
+      method: 'require',
+      native: false
+    },
+    {
+      column: 18,
+      file: 'internal/modules/cjs/helpers.js',
+      function: 'require',
+      line: 88,
+      method: null,
+      native: false
+    },
+    {
+      column: 1,
+      file: 'C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\src\\interval_methods\\check_pending_stocks\\/sellStock.js',
+      function: null,
+      line: 1,
+      method: null,
+      native: false
+    },
+    {
+      column: 30,
+      file: 'internal/modules/cjs/loader.js',
+      function: 'Module._compile',
+      line: 1063,
+      method: '_compile',
+      native: false
+    },
+    {
+      column: 24,
+      file: 'C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\pirates\\lib\\index.js',
+      function: 'Module._compile',
+      line: 136,
+      method: '_compile',
+      native: false
+    },
+    {
+      column: 10,
+      file: 'internal/modules/cjs/loader.js',
+      function: 'Module._extensions..js',
+      line: 1092,
+      method: '.js',
+      native: false
+    },
+    {
+      column: 7,
+      file: 'C:\\Users\\Matthias\\OneDrive\\Desktop\\Programming\\websites\\Stonks\\pendingStockWorker\\node_modules\\pirates\\lib\\index.js',
+      function: 'Object.newLoader [as .js]',
+      line: 141,
+      method: 'js]',
+      native: false
+    },
+    {
+      column: 32,
+      file: 'internal/modules/cjs/loader.js',
+      function: 'Module.load',
+      line: 928,
+      method: 'load',
+      native: false
+    }
+  ],
+  timestamp: '2022-02-04 10:18:24'
+}
+{
+  messageFormat: undefined,
+  stringValue: '"{ id: new ObjectId("61fc3e37758452b54dfe9005") }"',
+  kind: 'ObjectId',
+  value: { id: new ObjectId("61fc3e37758452b54dfe9005") },
+  path: '_id',
+  reason: TypeError: Argument passed in must be a string of 12 bytes or a string of 24 hex characters
+      at new BSONTypeError (C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\node_modules\bson\src\error.ts:16:5)
+      at new ObjectId (C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\node_modules\bson\src\objectid.ts:86:15)
+      at castObjectId (C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\node_modules\mongoose\lib\cast\objectid.js:25:12)
+      at ObjectId.cast (C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\node_modules\mongoose\lib\schema\objectid.js:247:12)
+      at ObjectId.SchemaType.applySetters (C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\node_modules\mongoose\lib\schematype.js:1135:12)
+      at ObjectId.SchemaType._castForQuery (C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\node_modules\mongoose\lib\schematype.js:1567:15)
+      at ObjectId.SchemaType.castForQuery (C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\node_modules\mongoose\lib\schematype.js:1557:15)
+      at ObjectId.SchemaType.castForQueryWrapper (C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\node_modules\mongoose\lib\schematype.js:1534:20),
+  valueType: 'Object',
+  level: 'error',
+  timestamp: '2022-02-05 03:24:28'
+}
+{
+  messageFormat: undefined,
+  stringValue: '"{ id: new ObjectId("61fc3e37758452b54dfe9005") }"',
+  kind: 'ObjectId',
+  value: { id: new ObjectId("61fc3e37758452b54dfe9005") },
+  path: '_id',
+  reason: TypeError: Argument passed in must be a string of 12 bytes or a string of 24 hex characters
+      at new BSONTypeError (C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\node_modules\bson\src\error.ts:16:5)
+      at new ObjectId (C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\node_modules\bson\src\objectid.ts:86:15)
+      at castObjectId (C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\node_modules\mongoose\lib\cast\objectid.js:25:12)
+      at ObjectId.cast (C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\node_modules\mongoose\lib\schema\objectid.js:247:12)
+      at ObjectId.SchemaType.applySetters (C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\node_modules\mongoose\lib\schematype.js:1135:12)
+      at ObjectId.SchemaType._castForQuery (C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\node_modules\mongoose\lib\schematype.js:1567:15)
+      at ObjectId.SchemaType.castForQuery (C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\node_modules\mongoose\lib\schematype.js:1557:15)
+      at ObjectId.SchemaType.castForQueryWrapper (C:\Users\Matthias\OneDrive\Desktop\Programming\websites\Stonks\pendingStockWorker\node_modules\mongoose\lib\schematype.js:1534:20),
+  valueType: 'Object',
+  level: 'error',
+  timestamp: '2022-02-05 03:26:12'
+}

@@ -34,6 +34,10 @@ import USAFlag from "../../../assets/FlagIcons/usa.svg";
 
 registerLocale("da", da);
 
+const StyledBox = styled(Box)(({ theme }) => ({
+  backgroundColor: theme.palette.background.main,
+}));
+
 const NewInputBox = styled(Box)(({ theme }) => ({
   display: "flex",
   width: "100%",
@@ -473,7 +477,7 @@ const CreateNewGame = (props) => {
   };
 
   return (
-    <div>
+    <StyledBox component="div">
       <Container maxWidth="md">
         <HeaderBox>
           <HeaderTypography variant="h2">
@@ -771,7 +775,7 @@ const CreateNewGame = (props) => {
               />
               <RadioBoxContent variant="div">
                 <RadioBoxTypography variant="body1">
-                  500.000 kr.
+                  $500.000
                 </RadioBoxTypography>
               </RadioBoxContent>
             </RadioLabel>
@@ -796,7 +800,7 @@ const CreateNewGame = (props) => {
               />
               <RadioBoxContent variant="div">
                 <RadioBoxTypography variant="body1">
-                  1.000.000 kr.
+                  $1.000.000
                 </RadioBoxTypography>
               </RadioBoxContent>
             </RadioLabel>
@@ -818,7 +822,7 @@ const CreateNewGame = (props) => {
               />
               <RadioBoxContent variant="div">
                 <RadioBoxTypography variant="body1">
-                  Andet (kr.)
+                  Andet ($)
                 </RadioBoxTypography>
                 <StartBalanceTextField
                   id="start-balance-custom"
@@ -834,7 +838,7 @@ const CreateNewGame = (props) => {
                   error={startBalanceError}
                   helperText={
                     startBalanceError
-                      ? "Startbeløbet må ikke overskride 1 mia og skal min være 1 kr."
+                      ? "Startbeløbet må ikke overskride 1 mia og skal min være $1."
                       : ""
                   }
                 />
@@ -1111,7 +1115,7 @@ const CreateNewGame = (props) => {
           onSuccessFunc={createGame}
         />
       </Container>
-    </div>
+    </StyledBox>
   );
 };
 

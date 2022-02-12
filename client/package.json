@@ -7,10 +7,10 @@
     "start": "next start",
     "dev:next": "next dev",
     "build:next": "next build",
-    "watch:sass": "node-sass src/sass/main.scss src/styles/index.css -w",
-    "compile:sass": "node-sass src/sass/main.scss src/styles/index.comp.css",
+    "watch:sass": "sass --watch src/sass/main.scss src/styles/index.css",
+    "compile:sass": "sass src/sass/main.scss src/styles/index.comp.css",
     "prefix:css": "postcss --use autoprefixer -b \"last 10 version\" src/styles/index.comp.css -o src/styles/index.prefix.css",
-    "compress:css": "node-sass src/styles/index.prefix.css src/styles/index.css --output-style compressed",
+    "compress:css": "sass src/styles/index.prefix.css src/styles/index.css --style compressed",
     "build:css": "npm-run-all compile:sass prefix:css compress:css"
   },
   "dependencies": {
@@ -25,8 +25,7 @@
     "date-fns": "^2.28.0",
     "jquery": "^3.6.0",
     "js-cookie": "^3.0.1",
-    "next": "12.0.7",
-    "node-sass": "^7.0.1",
+    "next": "^12.0.9",
     "react": "17.0.2",
     "react-content-loader": "^6.1.0",
     "react-datepicker": "^4.5.0",
@@ -47,6 +46,7 @@
     "google-charts": "^2.0.0",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.4.4",
-    "postcss-cli": "^9.1.0"
+    "postcss-cli": "^9.1.0",
+    "sass": "^1.49.0"
   }
 }

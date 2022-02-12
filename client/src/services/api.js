@@ -60,7 +60,7 @@ api.interceptors.response.use(
             payload.message === "Access and refresh token expired"
           ) {
             logout();
-            return (window.location.href = "/logged-out");
+            return (window.location.href = "/");
           } else {
             return (window.location.href = "/error-page");
           }

@@ -36,7 +36,6 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Lato&display=swap"
             rel="stylesheet"
           />
-          <meta name="theme-color" content={theme.palette.primary.main} />
         </Head>
         <body>
           <Main />

@@ -4,12 +4,6 @@ import validateRequestJWT from "../helpers/token-validation";
 const express = require("express");
 const router = express.Router();
 
-router.get("/all/owned", validateRequestJWT, StockController.getAll);
-router.get(
-  "/current_market_price",
-  validateRequestJWT,
-  StockController.getCurrentMarketPrice
-);
 router.get(
   "/specific_stock",
   validateRequestJWT,
@@ -21,5 +15,12 @@ router.get("/get_company_information", StockController.getCompanyInformation);
 router.get("/get_chart_data", StockController.getChartData);
 router.get("/get_latest_data", StockController.getLatestData);
 router.get("/autocomplete", StockController.autocomplete);
+router.get("/get_stock_price", StockController.getStockPrice);
+router.post("/cancel_stock", validateRequestJWT, StockController.cancelStock);
+router.get(
+  "/get_all_owned_stocks",
+  validateRequestJWT,
+  StockController.getAllOwnedStocks
+);
 
 module.exports = router;

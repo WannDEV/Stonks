@@ -42,7 +42,7 @@ const StyledDialogActions = styled(DialogActions)(({ theme }) => ({
 }));
 
 const StyledCard = styled(Card)(({ theme }) => ({
-  backgroundColor: theme.palette.background.light,
+  backgroundColor: `${theme.palette.background.light} !important`,
   [theme.breakpoints.down("sm")]: {
     margin: `0 ${theme.spacing(2)}`,
   },

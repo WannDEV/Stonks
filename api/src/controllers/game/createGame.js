@@ -7,8 +7,7 @@ import User from "../../db/models/user";
 
 function makeid(length) {
   var result = "";
-  var characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   var charactersLength = characters.length;
   for (var i = 0; i < length; i++) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
@@ -93,7 +92,13 @@ const createGame = async function (req, res, next) {
       duration,
       owner: await user,
       users: [await user],
-      balances: [{ userId: await user, balance: startBalance }],
+      balances: [
+        {
+          userId: await user,
+          balance: startBalance,
+          displayBalance: startBalance,
+        },
+      ],
     });
 
     const savedGame = await game.save();

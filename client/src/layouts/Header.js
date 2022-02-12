@@ -273,7 +273,7 @@ const Header = (props) => {
   const settingsFunc = () => Router.push("/settings");
   const logOutFunc = () => {
     logout();
-    Router.push("/logged-out");
+    // Router.push("/logged-out");
   };
 
   const settingsIconStyling = {
